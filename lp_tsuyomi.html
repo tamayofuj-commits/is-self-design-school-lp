@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I's SELF DESIGN SCHOOL | 藤田珠世</title>
+  <style>
+    :root {
+      --lav: #b8a0d0;
+      --lav-light: #f5f0fa;
+      --lav-mid: #d4c0e8;
+      --lav-from: #c4a8d8;
+      --lav-to: #9670b8;
+      --mint: #8fbeaa;
+      --mint-light: #f0f8f4;
+      --gold: #b08a4a;
+      --gold-light: #f8f4ec;
+      --text: #3c3c3c;
+      --text-sub: #6a6a6a;
+      --text-light: #9a9a9a;
+      --bg: #fdfcfb;
+      --border: #e4dced;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Meiryo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    /* ── Layout ── */
+    .wrap        { max-width: 1140px; margin: 0 auto; padding: 0 40px; }
+    .wrap-md     { max-width: 860px;  margin: 0 auto; padding: 0 40px; }
+    .wrap-sm     { max-width: 680px;  margin: 0 auto; padding: 0 40px; }
+
+    /* ── Section shells ── */
+    .sec       { padding: 80px 0; }
+    .sec-white { background: #fff; padding: 80px 0; }
+    .sec-lav   { background: linear-gradient(180deg, #ede6f7 0%, #faf7fe 100%); padding: 80px 0; }
+    .sec-mint  { background: linear-gradient(180deg, #e3f2eb 0%, #f5fbf7 100%); padding: 80px 0; }
+    .sec-grad  { background: linear-gradient(135deg, #f0ebf7 0%, #ebf5f0 100%); padding: 80px 0; }
+    .sec-cream { background: #f9f6f2; padding: 80px 0; }
+
+    /* ── Section header ── */
+    .sec-header { text-align: center; margin-bottom: 52px; }
+    .sec-en {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--lav);
+      font-family: 'Hiragino Mincho ProN', Georgia, serif;
+      margin-bottom: 10px;
+    }
+    .sec-title {
+      font-size: clamp(20px, 3vw, 27px);
+      font-weight: 400;
+      font-family: 'Hiragino Mincho ProN', serif;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .sec-sub {
+      font-size: 14px;
+      color: var(--text-sub);
+      margin-top: 12px;
+      line-height: 1.9;
+    }
+
+    /* ── CTA Button ── */
+    .btn-main {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--lav-from) 0%, var(--lav-to) 100%);
+      color: #fff;
+      text-decoration: none;
+      padding: 19px 44px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      box-shadow: 0 6px 24px rgba(150, 112, 184, 0.28);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(150, 112, 184, 0.38);
+    }
+    .btn-wrap { text-align: center; }
+    .btn-note { font-size: 12px; color: var(--text-light); margin-top: 10px; text-align: center; }
+
+    /* Utility */
+    .mt-8  { margin-top: 8px;  }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-32 { margin-top: 32px; }
+    .mt-48 { margin-top: 48px; }
+    .text-center { text-align: center; }
+    .divider { text-align: center; color: var(--lav); font-size: 22px; letter-spacing: 5px; margin: 28px 0; }
+
+    /* ════════════════════════════════
+       1. HERO – 画像使用
+    ════════════════════════════════ */
+    .hero { background: linear-gradient(135deg, #f5f0fa 0%, #f0f8f4 100%); }
+    .hero-img-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: block;
+    }
+    .hero-img-wrap img { width: 100%; display: block; }
+    .hero-cta-area {
+      text-align: center;
+      padding: 40px 24px 52px;
+    }
+
+    /* ════════════════════════════════
+       2. PAIN CHECK
+    ════════════════════════════════ */
+    .check-list {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 28px;
+      border-bottom: 1px solid #f0ebf8;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-svg { flex-shrink: 0; margin-top: 3px; }
+
+    /* ════════════════════════════════
+       3. TRANSFORMATION: BEFORE → AFTER
+    ════════════════════════════════ */
+    .ba-wrap {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 0;
+      align-items: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .ba-box {
+      border-radius: 18px;
+      padding: 32px 28px;
+    }
+    .ba-before {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+    }
+    .ba-after {
+      background: linear-gradient(135deg, #f0ebf7 0%, #ebf5f0 100%);
+      border: 2px solid var(--lav-mid);
+    }
+    .ba-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .ba-before .ba-label { color: #aaa; }
+    .ba-after  .ba-label { color: var(--lav-to); }
+    .ba-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      color: var(--text-sub);
+    }
+    .ba-after .ba-item { color: var(--text); }
+    .ba-item:last-child { margin-bottom: 0; }
+    .ba-icon { flex-shrink: 0; margin-top: 3px; }
+    .ba-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--lav);
+    }
+    .ba-result {
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      border-radius: 14px;
+      padding: 24px 32px;
+      text-align: center;
+      color: #fff;
+      font-size: 16px;
+      line-height: 1.9;
+      max-width: 600px;
+      margin: 32px auto 0;
+    }
+
+    /* ════════════════════════════════
+       4. WHY ALONE – アイコン図解
+    ════════════════════════════════ */
+    .why-center {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .why-center-circle {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin: 0 auto;
+      box-shadow: 0 8px 24px rgba(150,112,184,0.25);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      max-width: 860px;
+      margin: 0 auto 36px;
+    }
+    .why-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px 16px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .why-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+    }
+    .why-icon-lav  { background: #f0ebf7; }
+    .why-icon-mint { background: #ebf5f0; }
+    .why-card-text {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+    .why-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .why-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 760px;
+      margin: 32px auto 0;
+    }
+    .why-flow-step {
+      flex: 1;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 16px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+    .why-flow-step strong { display: block; color: var(--text); font-size: 15px; margin-bottom: 4px; }
+    .why-flow-step.highlight {
+      border-color: var(--lav-mid);
+      background: linear-gradient(135deg, #f5f0fa, #f0f8f4);
+    }
+    .why-flow-step.highlight strong { color: var(--lav-to); }
+    .why-flow-arrow {
+      flex-shrink: 0;
+      width: 32px;
+      text-align: center;
+      font-size: 20px;
+      color: var(--lav);
+    }
+
+    /* ════════════════════════════════
+       5. ABOUT
+    ════════════════════════════════ */
+    .about-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      line-height: 2;
+      color: var(--text-sub);
+      text-align: center;
+    }
+    .about-box strong { color: var(--text); }
+
+    /* ════════════════════════════════
+       6. THREE MEANINGS – カード
+    ════════════════════════════════ */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .meaning-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 32px 24px 28px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .meaning-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--lav), var(--mint));
+    }
+    .meaning-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .meaning-word {
+      font-size: clamp(24px, 3vw, 32px);
+      font-family: 'Hiragino Mincho ProN', Georgia, serif;
+      color: var(--lav);
+      font-weight: 400;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .meaning-text {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.9;
+      text-align: left;
+    }
+
+    /* ════════════════════════════════
+       7. GETS – アイコングリッド
+    ════════════════════════════════ */
+    .gets-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .get-item {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .get-icon-wrap {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ════════════════════════════════
+       8. GROUP
+    ════════════════════════════════ */
+    .group-visual {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+    .gv-center, .gv-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px;
+      border-radius: 16px;
+      text-align: center;
+    }
+    .gv-side {
+      background: #f9f7fc;
+      border: 1px solid var(--border);
+    }
+    .gv-center {
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      color: #fff;
+      border-radius: 50%;
+      width: 140px; height: 140px;
+      margin: 0 auto;
+    }
+    .gv-side-label { font-size: 11px; letter-spacing: 0.1em; color: var(--lav); margin-bottom: 6px; }
+    .gv-side-text  { font-size: 13px; color: var(--text-sub); line-height: 1.6; }
+    .gv-center-text { font-size: 14px; font-weight: 700; line-height: 1.4; }
+    .group-note {
+      text-align: center;
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .group-note strong { color: var(--text); }
+
+    /* ════════════════════════════════
+       9. COMPARISON TABLE
+    ════════════════════════════════ */
+    .diff-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .diff-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 480px;
+    }
+    .diff-table th {
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      background: #f5f3f8;
+      color: var(--text-sub);
+    }
+    .diff-table th:first-child { text-align: left; }
+    .diff-table th:last-child {
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      color: #fff;
+    }
+    .diff-table td {
+      padding: 14px 20px;
+      font-size: 14px;
+      border-top: 1px solid #f0eaf8;
+      color: var(--text);
+      vertical-align: top;
+    }
+    .diff-table tr:nth-child(even) td { background: #faf8fd; }
+    .diff-table td:last-child { color: var(--lav-to); font-weight: 600; }
+    .diff-x { color: #c8b8b8; }
+    .diff-o { color: var(--lav-to); }
+
+    /* ════════════════════════════════
+       10. CURRICULUM – ビジュアルフロー
+    ════════════════════════════════ */
+    .flow-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .flow-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .flow-circle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(150,112,184,0.22);
+    }
+    .flow-label {
+      font-size: 10px;
+      color: var(--text-sub);
+      margin-top: 6px;
+      text-align: center;
+      white-space: nowrap;
+      max-width: 72px;
+    }
+    .flow-line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--lav-mid), var(--mint));
+      min-width: 16px;
+      max-width: 60px;
+      margin-bottom: 28px;
+    }
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .session-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 24px 24px 28px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .session-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(180deg, var(--lav), var(--mint));
+    }
+    .session-num-badge {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .session-body {}
+    .session-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .session-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.75;
+    }
+    .format-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+    .format-tag {
+      background: var(--mint-light);
+      color: var(--mint);
+      border: 1px solid rgba(143,190,170,0.35);
+      font-size: 12px;
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+
+    /* ════════════════════════════════
+       11. BONUS
+    ════════════════════════════════ */
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .bonus-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 24px;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .bonus-num-badge {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bonus-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .bonus-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.8;
+    }
+
+    /* ════════════════════════════════
+       12. SCHEDULE & PRICE
+    ════════════════════════════════ */
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      max-width: 580px;
+      margin: 0 auto 32px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .schedule-table th {
+      background: linear-gradient(135deg, #f0ebf7, #ebf5f0);
+      padding: 11px 20px;
+      font-size: 13px;
+      color: var(--text-sub);
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .schedule-table td {
+      padding: 12px 20px;
+      font-size: 14px;
+      color: var(--text);
+      border-bottom: 1px solid #f0eaf8;
+    }
+    .schedule-table tr:last-child td { border-bottom: none; }
+    .schedule-note {
+      font-size: 13px;
+      color: var(--text-sub);
+      text-align: center;
+      line-height: 1.95;
+      margin-bottom: 40px;
+    }
+    .price-card {
+      background: #fff;
+      border-radius: 22px;
+      padding: 48px 48px;
+      text-align: center;
+      border: 2px solid var(--lav-mid);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 36px rgba(184,160,208,0.13);
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .price-ribbon {
+      position: absolute;
+      top: 26px; right: -34px;
+      background: linear-gradient(135deg, var(--lav-from), var(--lav-to));
+      color: #fff;
+      font-size: 11px;
+      padding: 7px 52px;
+      transform: rotate(45deg);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .price-badge {
+      display: inline-block;
+      background: var(--lav-light);
+      color: var(--lav-to);
+      border: 1px solid var(--lav-mid);
+      font-size: 12px;
+      padding: 4px 18px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      letter-spacing: 0.05em;
+    }
+    .price-label  { font-size: 12px; color: var(--text-light); margin-bottom: 4px; }
+    .price-regular { font-size: 13px; color: var(--text-light); text-decoration: line-through; margin-bottom: 14px; }
+    .price-main { font-size: clamp(44px, 7vw, 58px); font-weight: 700; color: var(--lav-to); line-height: 1.1; }
+    .price-tax  { font-size: 18px; font-weight: 400; }
+    .price-daily { font-size: 14px; color: var(--text-sub); margin-top: 16px; line-height: 1.9; }
+    .price-info {
+      background: var(--lav-light);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 24px;
+      font-size: 13px;
+      text-align: left;
+      line-height: 1.85;
+      color: var(--text-sub);
+    }
+
+    /* ════════════════════════════════
+       13. PROFILE
+    ════════════════════════════════ */
+    .profile-card {
+      background: var(--gold-light);
+      border-radius: 20px;
+      padding: 44px 48px;
+      border: 1px solid #e8dcc8;
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .profile-photo-placeholder {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e8dff4, #d8ede4);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-light); font-size: 11px; text-align: center;
+    }
+    .profile-name-en {
+      font-family: 'Hiragino Mincho ProN', Georgia, serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--gold); font-weight: 400; margin-bottom: 2px;
+    }
+    .profile-name-ja { font-size: 22px; font-weight: 700; color: var(--text); }
+    .profile-ruby    { font-size: 12px; color: var(--text-light); letter-spacing: 0.1em; margin-bottom: 14px; }
+    .profile-tags    { margin-bottom: 16px; }
+    .ptag {
+      display: inline-block;
+      border: 1px solid var(--mint); color: var(--mint);
+      font-size: 11px; padding: 3px 11px; border-radius: 20px; margin: 2px;
+    }
+    .profile-text { font-size: 15px; color: var(--text-sub); line-height: 1.95; }
+    .stat-row { display: flex; gap: 16px; margin-top: 20px; }
+    .stat-box {
+      flex: 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+      border: 1px solid #e8dcc8;
+    }
+    .stat-num   { font-size: clamp(20px, 3vw, 26px); font-weight: 700; color: var(--lav-to); line-height: 1.1; }
+    .stat-label { font-size: 11px; color: var(--text-sub); margin-top: 4px; }
+
+    /* ════════════════════════════════
+       14. FAQ ACCORDION
+    ════════════════════════════════ */
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item  { border-bottom: 1px solid #ede6f7; }
+    .faq-item:first-child { border-top: 1px solid #ede6f7; }
+    .faq-q-btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      text-align: left; padding: 20px 0;
+      display: flex; align-items: flex-start; gap: 14px; font-family: inherit;
+    }
+    .faq-q-label { font-size: 13px; font-weight: 700; color: var(--lav-to); flex-shrink: 0; margin-top: 2px; }
+    .faq-q-text  { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.5; flex: 1; }
+    .faq-arrow   { flex-shrink: 0; color: var(--lav); font-size: 18px; transition: transform 0.3s; margin-top: 2px; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-body  { display: none; padding: 0 0 22px 28px; }
+    .faq-item.open .faq-body { display: block; }
+    .faq-a-label { font-size: 13px; font-weight: 700; color: var(--mint); margin-right: 6px; }
+    .faq-a-text  { font-size: 15px; color: var(--text-sub); line-height: 1.9; }
+
+    /* ════════════════════════════════
+       15–16. PS & FINAL CTA
+    ════════════════════════════════ */
+    .ps-block { max-width: 620px; margin: 0 auto; font-size: 16px; line-height: 2.1; color: var(--text-sub); text-align: center; }
+    .ps-label { font-weight: 700; color: var(--text); display: block; font-family: 'Hiragino Mincho ProN', serif; font-size: 18px; margin-bottom: 16px; }
+    .final-copy {
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-family: 'Hiragino Mincho ProN', serif;
+      line-height: 1.95;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .final-sub { font-size: 15px; color: var(--text-sub); line-height: 1.9; margin-bottom: 40px; }
+
+    footer {
+      background: #3c3c3c;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 12px;
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    /* ════════ PC強化：フォント・図 ════════ */
+    @media (min-width: 861px) {
+      body { font-size: 17px; }
+      .sec-title  { font-size: clamp(24px, 2.8vw, 32px); }
+      .sec-sub    { font-size: 16px; }
+      .check-item { font-size: 17px; padding: 18px 32px; }
+      /* BEFORE→AFTER をより大胆に */
+      .ba-box     { padding: 44px 36px; }
+      .ba-item    { font-size: 16px; margin-bottom: 16px; gap: 12px; }
+      .ba-arrow   { font-size: 48px; }
+      .ba-result  { font-size: 18px; padding: 28px 40px; margin-top: 40px; }
+      /* I'sで得られること */
+      .gets-grid  { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .get-item   { font-size: 16px; padding: 22px 24px; }
+      .get-icon-wrap { width: 44px; height: 44px; }
+      /* グループ・比較表 */
+      .group-note   { font-size: 17px; }
+      .diff-table td, .diff-table th { font-size: 15px; padding: 16px 22px; }
+      /* カリキュラム */
+      .session-heading { font-size: 17px; }
+      .session-desc    { font-size: 15px; }
+      /* ボーナス */
+      .bonus-title  { font-size: 16px; }
+      .bonus-desc   { font-size: 14px; }
+      /* プロフィール */
+      .profile-text { font-size: 16px; line-height: 2.0; }
+      /* FAQ */
+      .faq-q-text   { font-size: 17px; }
+      .faq-a-text   { font-size: 16px; }
+      /* why-grid */
+      .why-card-title { font-size: 15px; }
+      .why-card-text  { font-size: 14px; }
+      /* meaning */
+      .meaning-text   { font-size: 14px; }
+    }
+
+    @media (max-width: 860px) {
+      .ba-wrap    { grid-template-columns: 1fr; }
+      .ba-arrow   { transform: rotate(90deg); font-size: 24px; }
+      .cards-3    { grid-template-columns: 1fr; }
+      .gets-grid  { grid-template-columns: 1fr; }
+      /* スマホでspan 2を解除 */
+      .gets-grid .get-item:last-child { grid-column: auto !important; justify-content: flex-start !important; }
+      .why-grid   { grid-template-columns: 1fr 1fr; }
+      .why-flow   { flex-direction: column; }
+      .why-flow-arrow { transform: rotate(90deg); }
+      .group-visual { grid-template-columns: 1fr; gap: 16px; }
+      .gv-center  { width: 100%; height: auto; border-radius: 16px; padding: 24px; }
+      .curriculum-grid { grid-template-columns: 1fr; }
+      .bonus-grid { grid-template-columns: 1fr; }
+      .profile-card { grid-template-columns: 1fr; padding: 32px 28px; gap: 24px; }
+      .profile-photo-placeholder { margin: 0 auto; }
+      .flow-header { justify-content: flex-start; }
+    }
+    @media (max-width: 600px) {
+      .wrap, .wrap-md, .wrap-sm { padding: 0 20px; }
+      .sec, .sec-white, .sec-lav, .sec-mint, .sec-grad, .sec-cream { padding: 60px 0; }
+      .sec-header { margin-bottom: 36px; }
+      .why-grid   { grid-template-columns: 1fr 1fr; }
+      .price-card { padding: 36px 22px; }
+    }
+    @media (max-width: 440px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     1. HERO
+════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-img-wrap">
+    <img src="Strength/images/firstview.png" alt="I's SELF DESIGN SCHOOL | 藤田珠世">
+  </div>
+  <div class="hero-cta-area">
+    <a href="YOUR_FORM_URL" class="btn-main">自分の強みを活かす3ヶ月を始める</a>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     2. PAIN CHECK
+════════════════════════════════ -->
+<section class="sec-white">
+  <div class="wrap-sm">
+    <div class="sec-header">
+      <span class="sec-en">FOR YOU</span>
+      <h2 class="sec-title">こんな想いはありませんか？</h2>
+    </div>
+    <div class="check-list">
+      <div class="check-item">
+        <svg class="check-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="4" fill="#f0ebf7"/><path d="M5 10.5L8.5 14L15 7" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>自分の強みを聞かれると、うまく言葉にできない</span>
+      </div>
+      <div class="check-item">
+        <svg class="check-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="4" fill="#f0ebf7"/><path d="M5 10.5L8.5 14L15 7" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>ストレングスの結果はあるけれど、日常でどう活かせばいいかわからない</span>
+      </div>
+      <div class="check-item">
+        <svg class="check-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="4" fill="#f0ebf7"/><path d="M5 10.5L8.5 14L15 7" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>仕事もプライベートも、もっと自分に合う形で整えていきたい</span>
+      </div>
+      <div class="check-item">
+        <svg class="check-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="4" fill="#f0ebf7"/><path d="M5 10.5L8.5 14L15 7" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>人と比べて焦るより、自分の強みを信じて進めるようになりたい</span>
+      </div>
+      <div class="check-item">
+        <svg class="check-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="4" fill="#f0ebf7"/><path d="M5 10.5L8.5 14L15 7" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>頑張り方ではなく、自分に合う力の出し方を知りたい</span>
+      </div>
+      <div class="check-item">
+        <svg class="check-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="4" fill="#f0ebf7"/><path d="M5 10.5L8.5 14L15 7" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>自分を大切にすることが、仕事や人間関係にもつながる感覚を持ちたい</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     3. TRANSFORMATION: BEFORE → AFTER
+════════════════════════════════ -->
+<section class="sec-lav">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">TRANSFORMATION</span>
+      <h2 class="sec-title">I'sで目指すのは、<br>強みを知って終わりではありません。</h2>
+    </div>
+
+    <div class="ba-wrap">
+      <!-- BEFORE -->
+      <div class="ba-box ba-before">
+        <span class="ba-label">BEFORE</span>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="#c0b0b0" stroke-width="1.5" fill="none"/><path d="M5 8h6" stroke="#c0b0b0" stroke-width="1.5" stroke-linecap="round"/></svg>
+          「なんとなく知っている」状態
+        </div>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="#c0b0b0" stroke-width="1.5" fill="none"/><path d="M5 8h6" stroke="#c0b0b0" stroke-width="1.5" stroke-linecap="round"/></svg>
+          日常・仕事で使い方がわからない
+        </div>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="#c0b0b0" stroke-width="1.5" fill="none"/><path d="M5 8h6" stroke="#c0b0b0" stroke-width="1.5" stroke-linecap="round"/></svg>
+          人と比べて迷い、揺れてしまう
+        </div>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="#c0b0b0" stroke-width="1.5" fill="none"/><path d="M5 8h6" stroke="#c0b0b0" stroke-width="1.5" stroke-linecap="round"/></svg>
+          頑張り続けることに疲れを感じる
+        </div>
+      </div>
+
+      <!-- 矢印 -->
+      <div class="ba-arrow">→</div>
+
+      <!-- AFTER -->
+      <div class="ba-box ba-after">
+        <span class="ba-label">AFTER（3ヶ月後）</span>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#9670b8" opacity="0.15"/><path d="M4.5 8.2L7 10.7L11.5 5.5" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          自分の強みを自分の言葉で説明できる
+        </div>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#9670b8" opacity="0.15"/><path d="M4.5 8.2L7 10.7L11.5 5.5" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          仕事や選択に強みが使えるようになる
+        </div>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#9670b8" opacity="0.15"/><path d="M4.5 8.2L7 10.7L11.5 5.5" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          迷ったとき、自分の軸に戻れる
+        </div>
+        <div class="ba-item">
+          <svg class="ba-icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#9670b8" opacity="0.15"/><path d="M4.5 8.2L7 10.7L11.5 5.5" stroke="#9670b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          自分に合う力の出し方で動けるようになる
+        </div>
+      </div>
+    </div>
+
+    <div class="ba-result mt-32">
+      自分の強みを見つけ、<strong>自信を育て、</strong><br>
+      仕事も人生も自分に合う形で動かしていく3ヶ月。
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     4. WHY ALONE
+════════════════════════════════ -->
+<section class="sec">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">WHY</span>
+      <h2 class="sec-title">ひとりでは、自分の強みが<br>見えにくい理由</h2>
+      <p class="sec-sub">強みは「頑張って身につけたもの」ではなく、<br>「自然にやっていること」の中にあるから。</p>
+    </div>
+
+    <!-- アイコンカード 4つ -->
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon why-icon-lav">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" fill="#9670b8" opacity="0.7"/></svg>
+        </div>
+        <p class="why-card-title">人からよく頼まれること</p>
+        <p class="why-card-text">自分には当たり前でも、周りが求めることの中に強みが宿っている</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon why-icon-mint">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="#8fbeaa" opacity="0.8"/></svg>
+        </div>
+        <p class="why-card-title">つい考えてしまうこと</p>
+        <p class="why-card-text">意識しなくても自然と思考が向かう方向が、自分の資質を示している</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon why-icon-lav">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z" fill="#9670b8" opacity="0.7"/></svg>
+        </div>
+        <p class="why-card-title">自然に選んでいるやり方</p>
+        <p class="why-card-text">無意識に選ぶアプローチが、あなた固有の強みのパターン</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon why-icon-mint">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" fill="#8fbeaa" opacity="0.7"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" stroke="#8fbeaa" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/></svg>
+        </div>
+        <p class="why-card-title">周りが「すごい」と言うこと</p>
+        <p class="why-card-text">自分では当たり前のことが、他者から見ると魅力になっている</p>
+      </div>
+    </div>
+
+    <!-- フロー図：ひとりでは → グループ対話で → 言語化へ -->
+    <div class="why-flow mt-32">
+      <div class="why-flow-step">
+        <strong>ひとりの内省</strong>
+        「当たり前」すぎて気づけない
+      </div>
+      <div class="why-flow-arrow">→</div>
+      <div class="why-flow-step highlight">
+        <strong>客観的な視点＋<br>グループ対話</strong>
+        違いの中で輪郭が見えてくる
+      </div>
+      <div class="why-flow-arrow">→</div>
+      <div class="why-flow-step">
+        <strong>強みの言語化</strong>
+        使える自己理解へ
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     5. I'sとは
+════════════════════════════════ -->
+<section class="sec-mint">
+  <div class="wrap-sm">
+    <div class="sec-header">
+      <span class="sec-en">ABOUT</span>
+      <h2 class="sec-title">I'sとは</h2>
+    </div>
+    <div class="about-box">
+      <p>I's（あいず）は、<br>自己理解と自己受容を深めながら、<br>自分軸を育てていく<strong>3ヶ月グループコーチング講座</strong>です。</p>
+      <p style="margin-top:20px;">強みをただ知るだけではなく、<br>自分の考え方、感じ方、選び方、力の出し方を見つめながら、<br>仕事もプライベートも自分に合う形で整えていくことを目指します。</p>
+      <p style="margin-top:20px; color: var(--lav-to); font-weight:700;">誰かに合わせるための自己理解ではなく、<br>自分を大切にしながら、強みを活かして生きるための自己理解。</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     6. I'sに込めた3つの意味
+════════════════════════════════ -->
+<section class="sec-white">
+  <div class="wrap">
+    <div class="sec-header">
+      <span class="sec-en">MEANING</span>
+      <h2 class="sec-title">I'sに込めた、3つの意味</h2>
+    </div>
+    <div class="cards-3">
+
+      <div class="meaning-card">
+        <div class="meaning-icon" style="background: #f0ebf7;">
+          <!-- 人物シルエット -->
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="10" r="5" fill="#9670b8" opacity="0.7"/><path d="M6 26c0-5.52 4.48-10 10-10s10 4.48 10 10" stroke="#9670b8" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/></svg>
+        </div>
+        <p class="meaning-word">I's</p>
+        <p class="meaning-text">Weの前に、まずはI。誰かと共に進む前に、まず自分の視点・感性・強みを知ること。自分らしさを持った複数の「私たち」が、それぞれの人生を選んでいくという意味も込めています。</p>
+      </div>
+
+      <div class="meaning-card">
+        <div class="meaning-icon" style="background: #ebf5f0;">
+          <!-- 目のアイコン -->
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="16" rx="11" ry="7" stroke="#8fbeaa" stroke-width="2" fill="none"/><circle cx="16" cy="16" r="3.5" fill="#8fbeaa" opacity="0.7"/></svg>
+        </div>
+        <p class="meaning-word">eyes</p>
+        <p class="meaning-text">多くの視点で、自分を見つめること。強み、感情、思考、選び方、反応のクセ。ひとつの見方で決めつけず、さまざまな角度から自分を見つめることで、自己理解と自己受容を深めていきます。</p>
+      </div>
+
+      <div class="meaning-card">
+        <div class="meaning-icon" style="background: #f9f5ec;">
+          <!-- 星・合図 -->
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4l2.94 8.74H28l-7.47 5.52 2.94 8.74L16 21.48l-7.47 5.52 2.94-8.74L4 12.74h9.06z" fill="#b08a4a" opacity="0.6"/></svg>
+        </div>
+        <p class="meaning-word">合図</p>
+        <p class="meaning-text">自分を知ることは、これからの人生を豊かに進めるための合図になります。「私はこれを大切にしたい」「私はこの強みで進みたい」という小さな気づきが、仕事も人生も動かすサインになります。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     7. I'sで得られること
+════════════════════════════════ -->
+<section class="sec-lav">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">OUTCOME</span>
+      <h2 class="sec-title">I'sで得られること</h2>
+    </div>
+    <div class="gets-grid">
+      <div class="get-item">
+        <div class="get-icon-wrap"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.2L7 12.7L14.5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        自分だけの強みの出方が見えてくる
+      </div>
+      <div class="get-item">
+        <div class="get-icon-wrap"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.2L7 12.7L14.5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        自分の強みを、自分の言葉で説明できるようになる
+      </div>
+      <div class="get-item">
+        <div class="get-icon-wrap"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.2L7 12.7L14.5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        仕事や日々の選択で、自分に合った力の使い方がわかる
+      </div>
+      <div class="get-item">
+        <div class="get-icon-wrap"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.2L7 12.7L14.5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        揺れたときも、自分の軸に戻れるようになる
+      </div>
+      <div class="get-item">
+        <div class="get-icon-wrap"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.2L7 12.7L14.5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        自分を大切にすることが仕事や人間関係にもつながっていく
+      </div>
+      <div class="get-item">
+        <div class="get-icon-wrap"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.2L7 12.7L14.5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        対話を通して、ひとりでは気づけない自分の魅力に出会える
+      </div>
+      <div class="get-item" style="grid-column: span 2; justify-content: center;">
+        <div class="get-icon-wrap"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.2L7 12.7L14.5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        自己理解を、知識ではなく日常に使える力に変えていける
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     8. グループだから見える強みがある
+════════════════════════════════ -->
+<section class="sec">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">GROUP</span>
+      <h2 class="sec-title">グループだから見える、<br>私だけの強みがある。</h2>
+    </div>
+
+    <!-- 視覚図：3者の対話イメージ -->
+    <div class="group-visual">
+      <div class="gv-side">
+        <p class="gv-side-label">気づき</p>
+        <p class="gv-side-text">「私は自然に<br>これをしていたんだ」</p>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <div class="gv-center">
+          <p class="gv-center-text">グループ<br>対話</p>
+        </div>
+      </div>
+      <div class="gv-side">
+        <p class="gv-side-label">発見</p>
+        <p class="gv-side-text">「これは私だけの<br>当たり前だったんだ」</p>
+      </div>
+    </div>
+
+    <p class="group-note mt-24">
+      誰かと比べるためではなく、<strong>違いの中で、自分の輪郭を知るために。</strong><br>
+      少人数グループで対話しながら、<br>ひとりでは見えなかった自分の魅力を受け取っていきます。
+    </p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     9. 一般的なストレングス講座との違い
+════════════════════════════════ -->
+<section class="sec-mint">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">DIFFERENCE</span>
+      <h2 class="sec-title">I'sは、資質解説だけの講座ではありません。</h2>
+    </div>
+    <div class="diff-wrap">
+      <table class="diff-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>一般的な講座</th>
+            <th>I's SELF DESIGN SCHOOL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>資質の理解</td>
+            <td><span class="diff-x">意味を説明して終わり</span></td>
+            <td>仕事・人生でどう使うかまで落とし込む</td>
+          </tr>
+          <tr>
+            <td>結果の到達点</td>
+            <td><span class="diff-x">結果を理解する</span></td>
+            <td>自分の言葉で強みを説明できるようにする</td>
+          </tr>
+          <tr>
+            <td>内省の方法</td>
+            <td><span class="diff-x">ひとりで内省する</span></td>
+            <td>グループ対話と個別セッションで深める</td>
+          </tr>
+          <tr>
+            <td>強みの変換</td>
+            <td><span class="diff-x">強みを知る</span></td>
+            <td>強みを自信と行動に変える</td>
+          </tr>
+          <tr>
+            <td>期間</td>
+            <td><span class="diff-x">単発</span></td>
+            <td>3ヶ月の伴走</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     10. 3ヶ月のカリキュラム
+════════════════════════════════ -->
+<section class="sec-white">
+  <div class="wrap">
+    <div class="sec-header">
+      <span class="sec-en">CURRICULUM</span>
+      <h2 class="sec-title">3ヶ月のカリキュラム</h2>
+      <p class="sec-sub">全6回 オンライン（Zoom）少人数グループ</p>
+    </div>
+
+    <!-- ステップフロー -->
+    <div class="flow-header">
+      <div class="flow-node">
+        <div class="flow-circle">1</div>
+        <p class="flow-label">視点に<br>戻る</p>
+      </div>
+      <div class="flow-line"></div>
+      <div class="flow-node">
+        <div class="flow-circle">2</div>
+        <p class="flow-label">強みを<br>知る</p>
+      </div>
+      <div class="flow-line"></div>
+      <div class="flow-node">
+        <div class="flow-circle">3</div>
+        <p class="flow-label">内側の<br>パターン</p>
+      </div>
+      <div class="flow-line"></div>
+      <div class="flow-node">
+        <div class="flow-circle">4</div>
+        <p class="flow-label">選び方を<br>知る</p>
+      </div>
+      <div class="flow-line"></div>
+      <div class="flow-node">
+        <div class="flow-circle">5</div>
+        <p class="flow-label">日常に<br>活かす</p>
+      </div>
+      <div class="flow-line"></div>
+      <div class="flow-node">
+        <div class="flow-circle">6</div>
+        <p class="flow-label">合図を<br>受け取る</p>
+      </div>
+    </div>
+
+    <!-- セッションカード -->
+    <div class="curriculum-grid">
+      <div class="session-card">
+        <div class="session-num-badge">1</div>
+        <div class="session-body">
+          <p class="session-heading">I's 私の視点に戻る</p>
+          <p class="session-desc">自分軸とは何か、I'sに込めた意味、3ヶ月のテーマを確認します。</p>
+        </div>
+      </div>
+      <div class="session-card">
+        <div class="session-num-badge">2</div>
+        <div class="session-body">
+          <p class="session-heading">強みを知る</p>
+          <p class="session-desc">ストレングスを手がかりに、強みの出方を「評価」ではなく「私らしさ」として見つめます。</p>
+        </div>
+      </div>
+      <div class="session-card">
+        <div class="session-num-badge">3</div>
+        <div class="session-body">
+          <p class="session-heading">感情と思考のクセを見つめる</p>
+          <p class="session-desc">心が動くとき・迷うとき・進みやすいとき。自分の内側のパターンを見つめます。</p>
+        </div>
+      </div>
+      <div class="session-card">
+        <div class="session-num-badge">4</div>
+        <div class="session-body">
+          <p class="session-heading">私の選び方を知る</p>
+          <p class="session-desc">自分の視点で選ぶための基準を言語化します。</p>
+        </div>
+      </div>
+      <div class="session-card">
+        <div class="session-num-badge">5</div>
+        <div class="session-body">
+          <p class="session-heading">仕事と日常に強みを活かす</p>
+          <p class="session-desc">仕事、人との関わり、日々の選択に強みをどう活かすかを見つめます。</p>
+        </div>
+      </div>
+      <div class="session-card">
+        <div class="session-num-badge">6</div>
+        <div class="session-body">
+          <p class="session-heading">未来への合図を受け取る</p>
+          <p class="session-desc">3ヶ月の気づきを統合し、これからの選び方・力の出し方を言葉にします。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-row">
+      <span class="format-tag">全6回 Zoom オンライン</span>
+      <span class="format-tag">少人数グループ（定員10名）</span>
+      <span class="format-tag">録画視聴あり</span>
+      <span class="format-tag">期間中サポートあり</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     11. 0期参加特典
+════════════════════════════════ -->
+<section class="sec-cream">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">SPECIAL BONUS</span>
+      <h2 class="sec-title">0期限定 参加特典</h2>
+    </div>
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <div class="bonus-num-badge">1</div>
+        <div>
+          <p class="bonus-title">34資質別・強みの受け取り方PDF</p>
+          <p class="bonus-desc">34資質をたまちゃん視点で解説。日々の選択や仕事に活かすためのガイドです。</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-num-badge">2</div>
+        <div>
+          <p class="bonus-title">I's 日めくりセルフカレンダー</p>
+          <p class="bonus-desc">毎日自分の視点に戻るための問いと言葉をまとめた日めくりカレンダー。</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-num-badge">3</div>
+        <div>
+          <p class="bonus-title">私の現在地を見つめる事前ワーク</p>
+          <p class="bonus-desc">本講座前に、自分の強み・感性・選び方を見つめるためのワークです。</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-num-badge">4</div>
+        <div>
+          <p class="bonus-title">早期申込者限定 特別ライブセミナー</p>
+          <p class="bonus-desc">資質の読み解き方を学ぶ特別セミナー。アーカイブは全受講生にお渡しします。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     12. 日程・価格 + CTA
+════════════════════════════════ -->
+<section class="sec-white">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">SCHEDULE &amp; PRICE</span>
+      <h2 class="sec-title">日程・価格</h2>
+      <p class="sec-sub">開講日：2026年6月24日（水）スタート</p>
+    </div>
+
+    <table class="schedule-table">
+      <thead>
+        <tr><th>回</th><th>日程</th><th>時間</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>第1回</td><td>6月24日（水）</td><td>13:00〜15:00</td></tr>
+        <tr><td>第2回</td><td>7月8日（水）</td><td>10:00〜12:00</td></tr>
+        <tr><td>第3回</td><td>7月22日（水）</td><td>13:00〜15:00</td></tr>
+        <tr><td>第4回</td><td>8月5日（水）</td><td>10:00〜12:00</td></tr>
+        <tr><td>第5回</td><td>8月19日（水）</td><td>13:00〜15:00</td></tr>
+        <tr><td>第6回</td><td>9月2日（水）</td><td>10:00〜12:00</td></tr>
+      </tbody>
+    </table>
+    <p class="schedule-note">すべてオンライン（Zoom）開催。録画視聴あり。欠席回もあとからご自身のペースで学べます。</p>
+
+    <div class="price-card">
+      <div class="price-ribbon">0期限定</div>
+      <span class="price-badge">0期モニター価格</span>
+      <p class="price-label">通常価格</p>
+      <p class="price-regular">120,000円（税込）予定</p>
+      <p class="price-main">¥49,800<span class="price-tax">（税込）</span></p>
+      <p class="price-daily">定員10名 ／ 1日あたり約550円</p>
+      <div class="price-info">
+        <strong>CliftonStrengthsの受検について</strong><br>
+        受検費用は講座代に含まれていません。すでに受検済みの方はその結果を使用できます。未受検の方にはお申込み後にご案内します。
+      </div>
+    </div>
+
+    <div class="btn-wrap mt-32">
+      <a href="YOUR_FORM_URL" class="btn-main">自分の強みを活かす3ヶ月を始める</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     13. 講師紹介
+════════════════════════════════ -->
+<section class="sec-grad">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">INSTRUCTOR</span>
+      <h2 class="sec-title">講師紹介</h2>
+    </div>
+    <div class="profile-card">
+      <div>
+        <div class="profile-photo-placeholder">講師写真</div>
+      </div>
+      <div>
+        <p class="profile-name-en">Fujita Tamayu</p>
+        <p class="profile-name-ja">藤田 珠世</p>
+        <p class="profile-ruby">FUJITA TAMAYU</p>
+        <div class="profile-tags">
+          <span class="ptag">Gallup認定ストレングスコーチ</span>
+          <span class="ptag">国家資格キャリアコンサルタント</span>
+          <span class="ptag">合同会社チームシナジー 代表</span>
+        </div>
+        <p class="profile-text">
+          2018年より強みコーチとして活動。個人向けコーチング・キャリア相談に加え、企業研修・組織向けの強み活用支援にも携わる。<br><br>
+          外資系企業の管理職として、メンバーの強みや多様性を尊重したチームづくりを経験。エンゲージメントの高い職場環境の構築に取り組んできた。<br><br>
+          I'sでは、自分を理解し受容し、強みを活用することで、仕事も人間関係も自分らしく動かしていける人を育てていきます。
+        </p>
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-num">10名+</div>
+            <div class="stat-label">35万円継続講座の受講者</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">約100名</div>
+            <div class="stat-label">5万円規模講座の受講者</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     14. よくある質問
+════════════════════════════════ -->
+<section class="sec-white">
+  <div class="wrap-md">
+    <div class="sec-header">
+      <span class="sec-en">FAQ</span>
+      <h2 class="sec-title">よくある質問</h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q-btn" aria-expanded="false">
+          <span class="faq-q-label">Q</span>
+          <span class="faq-q-text">ストレングスを受けたことがなくても参加できますか？</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-body">
+          <p class="faq-a-text"><span class="faq-a-label">A</span>はい、参加できます。未受検の方には、お申込み後に受検方法をご案内します。なお、受検費用は講座代には含まれていません。</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q-btn" aria-expanded="false">
+          <span class="faq-q-label">Q</span>
+          <span class="faq-q-text">すでにストレングスを受けています。再受検は必要ですか？</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-body">
+          <p class="faq-a-text"><span class="faq-a-label">A</span>いいえ、再受検は必要ありません。お持ちの診断結果を使ってご参加いただけます。「知って終わり」にならないよう、日々の選択や力の出し方にどう活かすかを一緒に見つめていきます。</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q-btn" aria-expanded="false">
+          <span class="faq-q-label">Q</span>
+          <span class="faq-q-text">リアルタイムで参加できない回があっても大丈夫ですか？</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-body">
+          <p class="faq-a-text"><span class="faq-a-label">A</span>はい、大丈夫です。録画をお渡ししますので欠席回はあとから視聴できます。ただし可能な回はリアルタイムで参加いただくと、対話を通してより気づきが深まります。</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q-btn" aria-expanded="false">
+          <span class="faq-q-label">Q</span>
+          <span class="faq-q-text">起業していなくても参加できますか？</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-body">
+          <p class="faq-a-text"><span class="faq-a-label">A</span>はい、参加できます。I'sは起業ノウハウを学ぶ講座ではなく、自分の強み・感性・選び方を見つめながら自分軸を育てていく講座です。自分らしい働き方を考えたい方、仕事もプライベートも自分に合う形で整えたい方におすすめです。</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q-btn" aria-expanded="false">
+          <span class="faq-q-label">Q</span>
+          <span class="faq-q-text">どんな人に向いていますか？</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-body">
+          <p class="faq-a-text"><span class="faq-a-label">A</span>自分の強みをもっと深く知りたい方。ストレングスの結果を日常に活かしたい方。人と比べるより自分に合う力の出し方を見つけたい方。自己理解と自己受容を深めながら次の一歩を選びたい方に向いています。</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q-btn" aria-expanded="false">
+          <span class="faq-q-label">Q</span>
+          <span class="faq-q-text">どんな人には合わないですか？</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-body">
+          <p class="faq-a-text"><span class="faq-a-label">A</span>すぐに売上アップのノウハウだけを知りたい方や、誰かに正解を決めてもらいたい方には少し合わないかもしれません。I'sは、自分の内側にある強みや感性を見つめながら「私はどう進みたいか」を育てていく講座です。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     15. P.S.
+════════════════════════════════ -->
+<section class="sec-lav">
+  <div class="wrap">
+    <div class="ps-block">
+      <span class="ps-label">P.S.</span>
+      <p>
+        I'sで目指すのは、特別な誰かになることではありません。<br><br>
+        自分の中にすでにある強みを知り、<br>
+        自分を大切に扱いながら、<br>
+        仕事も人生も自分に合う形で動かしていくこと。<br><br>
+        その土台を、3ヶ月かけて一緒に育てていきます。<br><br>
+        <strong style="color:var(--text);">藤田珠世</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     16. FINAL CTA
+════════════════════════════════ -->
+<section class="sec-grad" style="padding: 96px 0; text-align: center;">
+  <div class="wrap">
+    <p class="final-copy">
+      3ヶ月後、あなたはきっと<br>
+      自分の強みを「なんとなく」ではなく、<br>
+      自分の言葉で説明できるようになっています。<br><br>
+      人と比べて揺れたときも、仕事で迷ったときも、<br>
+      「私はこの強みで進めばいい」と<br>
+      自分の軸に戻れるようになる。
+    </p>
+    <p class="final-sub">
+      I'sは、自分だけの強みを見つけ、自信と行動に変えていく3ヶ月講座です。<br>
+      0期は少人数でスタートします。気になっている方は、フォームからお申し込みください。
+    </p>
+    <div class="btn-wrap">
+      <a href="YOUR_FORM_URL" class="btn-main">自分の強みを活かす3ヶ月を始める</a>
+      <p class="btn-note mt-8">藤田珠世 / I's SELF DESIGN SCHOOL</p>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <p>© I's SELF DESIGN SCHOOL &nbsp;/&nbsp; 合同会社チームシナジー 藤田珠世</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(el) {
+        el.classList.remove('open');
+        el.querySelector('.faq-q-btn').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
