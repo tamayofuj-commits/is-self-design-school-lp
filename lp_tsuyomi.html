@@ -28,7 +28,7 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.75;
-      font-size: 16px;
+      font-size: 17px;
     }
 
     /* ── Layout ── */
@@ -62,7 +62,7 @@
       line-height: 1.55;
     }
     .sec-sub {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text-sub);
       margin-top: 12px;
       line-height: 1.9;
@@ -71,7 +71,7 @@
     /* ── CTA Button ── */
     .btn-main {
       display: inline-block;
-      background: linear-gradient(135deg, var(--lav-from) 0%, var(--lav-to) 100%);
+      background: linear-gradient(135deg, #f472b6 0%, #be185d 100%);
       color: #fff;
       text-decoration: none;
       padding: 19px 44px;
@@ -79,12 +79,12 @@
       font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.06em;
-      box-shadow: 0 6px 24px rgba(150, 112, 184, 0.28);
+      box-shadow: 0 8px 28px rgba(190, 24, 93, 0.38);
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .btn-main:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(150, 112, 184, 0.38);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(190, 24, 93, 0.50);
     }
     .btn-wrap { text-align: center; }
     .btn-note { font-size: 12px; color: var(--text-light); margin-top: 10px; text-align: center; }
@@ -128,9 +128,9 @@
       gap: 14px;
       padding: 16px 28px;
       border-bottom: 1px solid #f0ebf8;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--text);
-      line-height: 1.65;
+      line-height: 1.7;
     }
     .check-item:last-child { border-bottom: none; }
     .check-svg { flex-shrink: 0; margin-top: 3px; }
@@ -171,8 +171,8 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.7;
       margin-bottom: 12px;
       color: var(--text-sub);
     }
@@ -245,12 +245,12 @@
     .why-icon-lav  { background: #f0ebf7; }
     .why-icon-mint { background: #ebf5f0; }
     .why-card-text {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-sub);
       line-height: 1.6;
     }
     .why-card-title {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 4px;
@@ -627,7 +627,7 @@
     .schedule-table th {
       background: linear-gradient(135deg, #f0ebf7, #ebf5f0);
       padding: 11px 20px;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-sub);
       font-weight: 600;
       text-align: left;
@@ -635,7 +635,7 @@
     }
     .schedule-table td {
       padding: 12px 20px;
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text);
       border-bottom: 1px solid #f0eaf8;
     }
@@ -715,9 +715,13 @@
     .profile-photo-placeholder {
       width: 160px; height: 160px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #e8dff4, #d8ede4);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-light); font-size: 11px; text-align: center;
+      overflow: hidden;
+    }
+    .profile-photo-placeholder img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
     .profile-name-en {
       font-family: 'Hiragino Mincho ProN', Georgia, serif;
@@ -732,7 +736,7 @@
       border: 1px solid var(--mint); color: var(--mint);
       font-size: 11px; padding: 3px 11px; border-radius: 20px; margin: 2px;
     }
-    .profile-text { font-size: 15px; color: var(--text-sub); line-height: 1.95; }
+    .profile-text { font-size: 16px; color: var(--text-sub); line-height: 2.0; }
     .stat-row { display: flex; gap: 16px; margin-top: 20px; }
     .stat-box {
       flex: 1;
@@ -757,13 +761,13 @@
       display: flex; align-items: flex-start; gap: 14px; font-family: inherit;
     }
     .faq-q-label { font-size: 13px; font-weight: 700; color: var(--lav-to); flex-shrink: 0; margin-top: 2px; }
-    .faq-q-text  { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.5; flex: 1; }
+    .faq-q-text  { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.5; flex: 1; }
     .faq-arrow   { flex-shrink: 0; color: var(--lav); font-size: 18px; transition: transform 0.3s; margin-top: 2px; }
     .faq-item.open .faq-arrow { transform: rotate(180deg); }
     .faq-body  { display: none; padding: 0 0 22px 28px; }
     .faq-item.open .faq-body { display: block; }
     .faq-a-label { font-size: 13px; font-weight: 700; color: var(--mint); margin-right: 6px; }
-    .faq-a-text  { font-size: 15px; color: var(--text-sub); line-height: 1.9; }
+    .faq-a-text  { font-size: 16px; color: var(--text-sub); line-height: 1.9; }
 
     /* ════════════════════════════════
        15–16. PS & FINAL CTA
@@ -792,38 +796,56 @@
     ════════════════════════════════ */
     /* ════════ PC強化：フォント・図 ════════ */
     @media (min-width: 861px) {
-      body { font-size: 17px; }
-      .sec-title  { font-size: clamp(24px, 2.8vw, 32px); }
-      .sec-sub    { font-size: 16px; }
-      .check-item { font-size: 17px; padding: 18px 32px; }
-      /* BEFORE→AFTER をより大胆に */
+      body { font-size: 22px; line-height: 1.85; }
+      .sec-title  { font-size: clamp(30px, 3vw, 40px); }
+      .sec-sub    { font-size: 20px; }
+      .check-item { font-size: 20px; padding: 20px 36px; }
+      /* BEFORE→AFTER */
       .ba-box     { padding: 44px 36px; }
-      .ba-item    { font-size: 16px; margin-bottom: 16px; gap: 12px; }
-      .ba-arrow   { font-size: 48px; }
-      .ba-result  { font-size: 18px; padding: 28px 40px; margin-top: 40px; }
+      .ba-item    { font-size: 20px; margin-bottom: 16px; gap: 12px; }
+      .ba-arrow   { font-size: 52px; }
+      .ba-result  { font-size: 21px; padding: 28px 40px; margin-top: 40px; }
       /* I'sで得られること */
       .gets-grid  { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .get-item   { font-size: 16px; padding: 22px 24px; }
+      .get-item   { font-size: 20px; padding: 24px 26px; }
       .get-icon-wrap { width: 44px; height: 44px; }
       /* グループ・比較表 */
-      .group-note   { font-size: 17px; }
-      .diff-table td, .diff-table th { font-size: 15px; padding: 16px 22px; }
+      .group-note   { font-size: 21px; }
+      .diff-table td, .diff-table th { font-size: 19px; padding: 18px 24px; }
       /* カリキュラム */
-      .session-heading { font-size: 17px; }
-      .session-desc    { font-size: 15px; }
+      .session-heading { font-size: 21px; }
+      .session-desc    { font-size: 19px; }
       /* ボーナス */
-      .bonus-title  { font-size: 16px; }
-      .bonus-desc   { font-size: 14px; }
+      .bonus-title  { font-size: 20px; }
+      .bonus-desc   { font-size: 18px; }
       /* プロフィール */
-      .profile-text { font-size: 16px; line-height: 2.0; }
+      .profile-name-ja { font-size: 28px; }
+      .profile-text { font-size: 20px; line-height: 2.1; }
       /* FAQ */
-      .faq-q-text   { font-size: 17px; }
-      .faq-a-text   { font-size: 16px; }
+      .faq-q-text   { font-size: 21px; }
+      .faq-a-text   { font-size: 20px; }
       /* why-grid */
-      .why-card-title { font-size: 15px; }
-      .why-card-text  { font-size: 14px; }
+      .why-card-title { font-size: 19px; }
+      .why-card-text  { font-size: 17px; }
       /* meaning */
-      .meaning-text   { font-size: 14px; }
+      .meaning-text   { font-size: 18px; }
+      /* price */
+      .price-daily    { font-size: 17px; }
+      /* ps / final */
+      .ps-block  { font-size: 20px; }
+      .final-sub { font-size: 19px; }
+      /* CTA button */
+      .btn-main { font-size: 20px; padding: 22px 60px; }
+      /* schedule */
+      .schedule-table th { font-size: 17px; padding: 14px 24px; }
+      .schedule-table td { font-size: 19px; padding: 15px 24px; }
+      .schedule-note { font-size: 17px; }
+      /* profile */
+      .profile-photo-placeholder { width: 200px; height: 200px; }
+      .profile-card { grid-template-columns: 220px 1fr; gap: 48px; }
+      .profile-name-ja { font-size: 30px; }
+      .profile-ruby    { font-size: 14px; }
+      .ptag            { font-size: 13px; padding: 4px 14px; }
     }
 
     @media (max-width: 860px) {
@@ -1429,12 +1451,14 @@
     </div>
     <div class="profile-card">
       <div>
-        <div class="profile-photo-placeholder">講師写真</div>
+        <div class="profile-photo-placeholder">
+          <img src="/Strength/images/introduce.jpg" alt="藤田珠世">
+        </div>
       </div>
       <div>
-        <p class="profile-name-en">Fujita Tamayu</p>
+        <p class="profile-name-en">Fujita Tamayo</p>
         <p class="profile-name-ja">藤田 珠世</p>
-        <p class="profile-ruby">FUJITA TAMAYU</p>
+        <p class="profile-ruby">FUJITA TAMAYO</p>
         <div class="profile-tags">
           <span class="ptag">Gallup認定ストレングスコーチ</span>
           <span class="ptag">国家資格キャリアコンサルタント</span>
@@ -1445,16 +1469,6 @@
           外資系企業の管理職として、メンバーの強みや多様性を尊重したチームづくりを経験。エンゲージメントの高い職場環境の構築に取り組んできた。<br><br>
           I'sでは、自分を理解し受容し、強みを活用することで、仕事も人間関係も自分らしく動かしていける人を育てていきます。
         </p>
-        <div class="stat-row">
-          <div class="stat-box">
-            <div class="stat-num">10名+</div>
-            <div class="stat-label">35万円継続講座の受講者</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num">約100名</div>
-            <div class="stat-label">5万円規模講座の受講者</div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
