@@ -248,30 +248,19 @@ document.addEventListener('DOMContentLoaded', function() {
 function showStartScreen() {
   const html = `
     <div class="start-inner">
-      <div class="start-label">あなたを知るための</div>
-      <h1 class="start-title">VAKバランスチェック</h1>
-      <p class="start-subtitle">あなたは「見てわかる」「聞いてわかる」「やってわかる」どれが強い？</p>
+      <h1 class="start-title">わたしの「わかる」入口診断</h1>
+      <p class="start-subtitle">見てわかる？聞いてわかる？やってわかる？</p>
       <div class="start-desc">
         <div class="start-desc-line">あなたは、どんなときに「わかった！」と感じますか？</div>
-        <div class="start-desc-line">見えるとわかる。</div>
-        <div class="start-desc-line">聞くと整理できる。</div>
-        <div class="start-desc-line">やってみると腑に落ちる。</div>
-        <div class="start-desc-line">この3つの感覚を、VAKと呼びます。</div>
+        <div class="start-desc-line">この診断では、あなたの「わかりやすい入口」を3つの感覚からチェックします。</div>
       </div>
       <div class="start-desc">
-        <div class="start-desc-sub">V＝見てつかむ</div>
-        <div class="start-desc-sub">A＝聞いて・言葉で整理する</div>
-        <div class="start-desc-sub">K＝体感して納得する</div>
+        <div class="start-desc-sub">V＝図やイメージでわかる</div>
+        <div class="start-desc-sub">A＝言葉や会話でわかる</div>
+        <div class="start-desc-sub">K＝体験や感覚でわかる</div>
       </div>
       <div class="start-desc">
-        このチェックでは、あなたがどの感覚を使いやすいかを
-        V・A・Kの割合で見ることができます。
-        <br><br>
-        自分の学び方や考え方のクセがわかると，
-        人に伝えるときのヒントにもなります。
-        <br><br>
-        タイプ分けではなく、今の自分を知るためのバランスチェックです。
-        気軽に答えてみてください。
+        自分の学び方や、人に伝えるときのヒントにしてみてください。
       </div>
       <div class="start-desc-label">
         <strong>回答方法</strong><br>
