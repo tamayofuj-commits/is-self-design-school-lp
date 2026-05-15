@@ -1,3 +1,0 @@
-name = "is-selfcheck"
-compatibility_date = "2024-05-09"
-assets = { directory = "." }
