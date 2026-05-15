@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAKバランスチェック - テスト</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif; background: #FAFAF8; color: #3A3A3A; }
+    #app { min-height: 100vh; display: flex; }
+    .screen { display: none; width: 100%; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+    .screen.active { display: flex; }
+    .container { max-width: 480px; width: 100%; }
+    h1 { font-size: 2em; margin-bottom: 20px; text-align: center; }
+    p { font-size: 1em; line-height: 1.8; margin-bottom: 20px; text-align: center; }
+    .btn { width: 100%; padding: 16px 24px; margin: 10px 0; background: linear-gradient(135deg, #D4B5A0 0%, #C49A85 100%); color: white; border: none; border-radius: 50px; font-size: 1em; cursor: pointer; box-shadow: 0 4px 20px rgba(180,160,140,0.2); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(180,160,140,0.3); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .options { display: flex; flex-direction: column; gap: 16px; margin: 20px 0; }
+    .option { padding: 16px; background: white; border: 2px solid #EEEEEE; border-radius: 12px; text-align: left; transition: all 0.2s; }
+    .option:hover { border-color: #D4B5A0; }
+    .option.selected { border-color: #D4B5A0; background: #F5F0EA; }
+    .option-text { margin-bottom: 12px; line-height: 1.6; }
+    .option-buttons { display: flex; gap: 10px; }
+    .option-btn { flex: 1; padding: 8px 12px; border: 1.5px solid #EEEEEE; background: white; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 500; transition: all 0.2s; }
+    .option-btn:hover { border-color: #D4B5A0; color: #D4B5A0; }
+    .option-btn.active { background: #D4B5A0; color: white; border-color: #D4B5A0; }
+    .progress { height: 4px; background: #EEEEEE; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #E8B4D0, #B8D4B8); transition: width 0.3s; }
+    .question-num { color: #D4B5A0; font-size: 0.9em; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="screen-start" class="screen active">
+      <div class="container">
+        <h1>VAKバランスチェック</h1>
+        <p style="margin-bottom: 30px;">あなたは「見てわかる」「聞いてわかる」「やってわかる」どれが強い？</p>
+        <p>このチェックでは、あなたがどの感覚を使いやすいかをV・A・Kの割合で見ることができます。</p>
+        <p>タイプ分けではなく、今の自分を知るためのバランスチェックです。気軽に答えてみてください。</p>
+        <button class="btn" onclick="startQuiz()">チェックをはじめる</button>
+      </div>
+    </div>
+
+    <div id="screen-question" class="screen">
+      <div class="container">
+        <div class="progress">
+          <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <div class="question-num" id="q-num"></div>
+        <h2 id="q-text" style="font-size: 1.3em; margin-bottom: 30px;"></h2>
+        <div class="options" id="options"></div>
+        <button class="btn" id="btn-next" disabled onclick="nextQuestion()">次へ</button>
+      </div>
+    </div>
+
+    <div id="screen-result" class="screen">
+      <div class="container">
+        <h1>あなたのVAKバランス</h1>
+        <div id="results" style="margin: 40px 0;"></div>
+        <button class="btn" onclick="startQuiz()">もう一度チェックする</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const QUESTIONS = [
+      { id: 1, text: "新しい場所に行くとき", options: [
+        { type: "V", text: "地図や写真を見て、道順や雰囲気をイメージしたい" },
+        { type: "A", text: "行き方を言葉で説明してもらうと安心する" },
+        { type: "K", text: "実際に歩いてみると、感覚で覚えやすい" }
+      ]},
+      { id: 2, text: "新しいことを学ぶとき", options: [
+        { type: "V", text: "図やスライド、全体像があると理解しやすい" },
+        { type: "A", text: "説明を聞いたり、話しながら整理すると理解しやすい" },
+        { type: "K", text: "実際にやってみたり、手を動かすと理解しやすい" }
+      ]},
+      { id: 3, text: "考えごとを整理するとき", options: [
+        { type: "V", text: "紙に書き出したり、図にすると整理しやすい" },
+        { type: "A", text: "誰かに話したり、自分の言葉にすると整理しやすい" },
+        { type: "K", text: "身体の重さや違和感を手がかりにするとわかりやすい" }
+      ]},
+      { id: 4, text: "これからのことを考えるとき", options: [
+        { type: "V", text: "理想の場面や景色が浮かぶと考えやすい" },
+        { type: "A", text: "未来の自分の言葉や、誰かとの会話を想像すると考えやすい" },
+        { type: "K", text: "その未来にいる自分の安心感や高揚感を感じると進みたくなる" }
+      ]},
+      { id: 5, text: "人の話を聞いていて印象に残りやすいのは？", options: [
+        { type: "V", text: "場面が浮かぶ具体的なエピソード" },
+        { type: "A", text: "心に残る言葉やフレーズ" },
+        { type: "K", text: "その人の感情や空気感が伝わる話" }
+      ]},
+      { id: 6, text: "何かを決めるとき", options: [
+        { type: "V", text: "選択肢を並べて、全体像を見て決めたい" },
+        { type: "A", text: "メリット・デメリットを言葉で整理して決めたい" },
+        { type: "K", text: "身体が軽くなるか、重くなるかの感覚を大事にしたい" }
+      ]},
+      { id: 7, text: "講座や説明で「わかりやすい」と感じるのは？", options: [
+        { type: "V", text: "スライド、図解、写真などで流れが見える" },
+        { type: "A", text: "説明がわかりやすく、言葉がしっくりくる" },
+        { type: "K", text: "ワークや体験があって、自分の中で腑に落ちる" }
+      ]},
+      { id: 8, text: "身近な人の変化に気づくとき", options: [
+        { type: "V", text: "表情、姿勢、服装、持ち物など、見た目の変化で気づく" },
+        { type: "A", text: "声のトーン、言葉づかい、会話の変化で気づく" },
+        { type: "K", text: "空気感、距離感、なんとなくの違和感で気づく" }
+      ]},
+      { id: 9, text: "自分を整えたいときに効きやすいのは？", options: [
+        { type: "V", text: "きれいな景色を見る、部屋を整える、好きなものを眺める" },
+        { type: "A", text: "音楽を聴く、安心する言葉をもらう、話を聞いてもらう" },
+        { type: "K", text: "お風呂、散歩、マッサージ、温かい飲み物など身体がゆるむこと" }
+      ]},
+      { id: 10, text: "行動に移しやすくなるのは？", options: [
+        { type: "V", text: "ゴールや手順が見えていると動きやすい" },
+        { type: "A", text: "「これをやればいい」と言葉で整理されると動きやすい" },
+        { type: "K", text: "まず少しやってみて、感覚がつかめると動きやすい" }
+      ]}
+    ];
+
+    let currentQuestion = 0;
+    let answers = {};
+
+    function startQuiz() {
+      currentQuestion = 0;
+      answers = {};
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const question = QUESTIONS[currentQuestion];
+      const progress = ((currentQuestion + 1) / QUESTIONS.length) * 100;
+
+      document.getElementById('progress-fill').style.width = progress + '%';
+      document.getElementById('q-num').textContent = `Q${question.id}`;
+      document.getElementById('q-text').textContent = question.text;
+
+      let optionsHtml = '';
+      question.options.forEach((option, idx) => {
+        const answer = answers[question.id] || {};
+        const isSelectedFirst = answer.first === idx;
+        const isSelectedSecond = answer.second === idx;
+        const selectedClass = isSelectedFirst ? 'selected' : '';
+
+        optionsHtml += `
+          <div class="option ${selectedClass}">
+            <div class="option-text">${option.text}</div>
+            <div class="option-buttons">
+              <button class="option-btn ${isSelectedFirst ? 'active' : ''}" onclick="selectFirst(${question.id}, ${idx})">◎ 一番近い</button>
+              <button class="option-btn ${isSelectedSecond ? 'active' : ''}" onclick="selectSecond(${question.id}, ${idx})">○ 二番目</button>
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById('options').innerHTML = optionsHtml;
+
+      const hasFirstAnswer = answers[question.id]?.first !== undefined;
+      document.getElementById('btn-next').disabled = !hasFirstAnswer;
+
+      showScreen('screen-question');
+    }
+
+    function selectFirst(questionId, optionIndex) {
+      if (!answers[questionId]) {
+        answers[questionId] = { first: undefined, second: undefined };
+      }
+      answers[questionId].first = optionIndex;
+
+      // 二番目に同じものが選ばれていたら削除
+      if (answers[questionId].second === optionIndex) {
+        answers[questionId].second = undefined;
+      }
+
+      showQuestion();
+    }
+
+    function selectSecond(questionId, optionIndex) {
+      if (!answers[questionId]) {
+        answers[questionId] = { first: undefined, second: undefined };
+      }
+
+      // 一番近いと同じものは選べない
+      if (optionIndex === answers[questionId].first) {
+        return;
+      }
+
+      answers[questionId].second = optionIndex;
+      showQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < QUESTIONS.length - 1) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const scores = { V: 0, A: 0, K: 0 };
+
+      QUESTIONS.forEach(question => {
+        const answer = answers[question.id];
+        if (!answer) return;
+
+        // 一番近い：2点
+        if (answer.first !== undefined) {
+          const type = question.options[answer.first].type;
+          scores[type] += 2;
+        }
+
+        // 二番目に近い：1点
+        if (answer.second !== undefined) {
+          const type = question.options[answer.second].type;
+          scores[type] += 1;
+        }
+      });
+
+      const total = scores.V + scores.A + scores.K;
+      let pct = {
+        V: Math.round((scores.V / total) * 100),
+        A: Math.round((scores.A / total) * 100),
+        K: Math.round((scores.K / total) * 100)
+      };
+
+      // 合計が100%になるよう調整
+      const sum = pct.V + pct.A + pct.K;
+      if (sum !== 100) {
+        const diff = 100 - sum;
+        const types = ['V', 'A', 'K'];
+        const sorted = types.sort((a, b) => scores[b] - scores[a]);
+        pct[sorted[0]] += diff;
+      }
+
+      let html = '<div style="text-align: center; font-size: 1.2em; line-height: 2.5;">';
+      html += `👁️ V（見てつかむ）：<strong style="color: #E8B4D0; font-size: 1.3em;">${pct.V}%</strong><br>`;
+      html += `👂 A（聞いて・言葉で整理）：<strong style="color: #B5D1E8; font-size: 1.3em;">${pct.A}%</strong><br>`;
+      html += `✨ K（体感して納得）：<strong style="color: #B8D4B8; font-size: 1.3em;">${pct.K}%</strong><br>`;
+      html += '</div>';
+
+      document.getElementById('results').innerHTML = html;
+      showScreen('screen-result');
+    }
+
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+  </script>
+</body>
+</html>
