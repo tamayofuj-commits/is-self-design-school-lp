@@ -194,30 +194,37 @@ a { text-decoration: none; color: inherit; }
    ============================================================ */
 #screen-question {
   background: var(--bg);
-  padding-bottom: 48px;
+  padding-top: 16px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
 .q-wrapper {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 /* Header & Progress */
 .q-header {
-  padding: 24px 0 8px;
+  padding: 0 0 12px 0;
 }
 
 .progress-wrap {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .progress-track {
   flex: 1;
-  height: 4px;
+  height: 6px;
   background: var(--border);
   border-radius: 4px;
   overflow: hidden;
@@ -231,11 +238,12 @@ a { text-decoration: none; color: inherit; }
 }
 
 .progress-label {
-  font-size: 0.78rem;
-  color: var(--text-sub);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
   letter-spacing: 0.06em;
   white-space: nowrap;
-  min-width: 36px;
+  min-width: 40px;
   text-align: right;
 }
 
@@ -244,8 +252,11 @@ a { text-decoration: none; color: inherit; }
   opacity: 0;
   transform: translateX(28px);
   transition: opacity 0.3s ease, transform 0.3s ease;
-  padding-top: 32px;
-  padding-bottom: 24px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .q-body.slide-in {
   opacity: 1;
@@ -257,21 +268,21 @@ a { text-decoration: none; color: inherit; }
 }
 
 .q-num {
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--accent);
-  letter-spacing: 0.12em;
-  margin-bottom: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #D4B5A0;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
 }
 
 .q-text {
   font-family: var(--font-serif);
-  font-size: clamp(1.05rem, 4vw, 1.25rem);
-  font-weight: 600;
-  line-height: 1.7;
-  letter-spacing: 0.02em;
+  font-size: clamp(1.3rem, 5.5vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
   color: var(--text);
-  margin-bottom: 28px;
+  margin-bottom: 16px;
 }
 
 /* Option Cards */
