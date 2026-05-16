@@ -90,27 +90,15 @@ a { text-decoration: none; color: inherit; }
    Start Screen
    ============================================================ */
 #screen-start {
-  background-image: url('./VAKimage.png');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: linear-gradient(135deg,
+    rgba(232, 180, 208, 0.08) 0%,
+    rgba(255, 255, 255, 0.95) 40%,
+    rgba(181, 209, 232, 0.08) 70%,
+    rgba(184, 212, 184, 0.08) 100%);
   align-items: center;
   justify-content: center;
   padding: 24px 20px 32px;
   position: relative;
-}
-
-#screen-start::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.70);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .start-inner {
@@ -449,25 +437,13 @@ a { text-decoration: none; color: inherit; }
    Result Screen
    ============================================================ */
 #screen-result {
-  background-image: url('./VAKimage.png');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: linear-gradient(135deg,
+    rgba(232, 180, 208, 0.08) 0%,
+    rgba(255, 255, 255, 0.98) 40%,
+    rgba(181, 209, 232, 0.08) 70%,
+    rgba(184, 212, 184, 0.08) 100%);
   padding-bottom: 64px;
   position: relative;
-}
-
-#screen-result::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.70);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .result-inner {
