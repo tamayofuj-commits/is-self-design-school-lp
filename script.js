@@ -247,6 +247,9 @@ document.addEventListener('DOMContentLoaded', function() {
    ============================================================ */
 function showStartScreen() {
   const html = `
+    <div class="start-image-hero">
+      <img src="VAKimage.png" alt="VAK イメージ" class="start-image">
+    </div>
     <div class="start-inner">
       <h1 class="start-title">わたしの「わかる」入口診断</h1>
       <p class="start-subtitle">見てわかる？聞いてわかる？やってわかる？</p>
@@ -428,6 +431,9 @@ function showResultScreen() {
 
   const html = `
     <div class="result-inner">
+      <div class="result-image-hero">
+        <img src="VAKimage.png" alt="VAK イメージ" class="result-image">
+      </div>
       <div class="result-hero">
         <h1 class="result-title">あなたのVAKバランス</h1>
       </div>
