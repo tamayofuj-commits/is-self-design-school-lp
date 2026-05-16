@@ -90,7 +90,11 @@ a { text-decoration: none; color: inherit; }
    Start Screen
    ============================================================ */
 #screen-start {
-  background: url('VAKimage.png') center/cover no-repeat fixed;
+  background-image: url('./VAKimage.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   align-items: center;
   justify-content: center;
   padding: 24px 20px 32px;
@@ -445,7 +449,11 @@ a { text-decoration: none; color: inherit; }
    Result Screen
    ============================================================ */
 #screen-result {
-  background: url('VAKimage.png') center/cover no-repeat fixed;
+  background-image: url('./VAKimage.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   padding-bottom: 64px;
   position: relative;
 }
