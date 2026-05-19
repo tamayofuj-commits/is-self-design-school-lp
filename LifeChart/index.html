@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>いまのわたしを知るチャート</title>
+  <meta name="description" content="9つの人生領域の満足度を診断。スマホで簡単にできるライフチャート診断です。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- ようこそ画面 -->
+    <div id="screen-welcome" class="screen active">
+      <div class="container">
+        <div class="welcome-content">
+          <div class="welcome-header">
+            <h1>いまのわたしを<br>知るチャート</h1>
+            <p class="welcome-subtitle">9つの人生領域から、今のあなたが見えてくる</p>
+          </div>
+
+          <div class="welcome-info">
+            <div class="info-item">
+              <div class="info-icon">⏱️</div>
+              <p><strong>所要時間：5分</strong></p>
+            </div>
+            <div class="info-item">
+              <p>10段階で感覚的に答えてOK</p>
+            </div>
+            <div class="info-item">
+              <p>主観100％でOK</p>
+            </div>
+            <div class="info-item">
+              <p>誰とも比較しない</p>
+            </div>
+            <div class="info-item">
+              <p>自分がどう感じるかを大切にする</p>
+            </div>
+            <div class="info-item">
+              <p>正解不正解はない</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="name-input">あなたのお名前</label>
+            <input
+              type="text"
+              id="name-input"
+              placeholder="名前を入力してください"
+              maxlength="20"
+              class="input-text"
+            >
+            <p class="input-note">日付は今日の日付が自動で入ります</p>
+          </div>
+
+          <button id="btn-start" class="btn btn-primary btn-lg" disabled>
+            さっそく始める
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 入力画面 -->
+    <div id="screen-input" class="screen">
+      <div class="container">
+        <div class="input-header">
+          <button id="btn-back" class="btn-back">← 戻る</button>
+          <div class="progress-info">
+            <span id="progress-text">進捗: 0/9</span>
+          </div>
+        </div>
+
+        <!-- チャートプレビュー -->
+        <div class="chart-preview">
+          <svg id="chart-svg" width="160" height="160" viewBox="0 0 160 160" class="chart-svg">
+            <!-- チャートはここに描画される -->
+          </svg>
+        </div>
+
+        <!-- 項目選択 -->
+        <div class="item-selector">
+          <button class="item-tab" data-item="0">身近な人</button>
+          <button class="item-tab" data-item="1">職場</button>
+          <button class="item-tab" data-item="2">趣味</button>
+          <button class="item-tab" data-item="3">学び</button>
+          <button class="item-tab" data-item="4">生活環境</button>
+          <button class="item-tab" data-item="5">資産</button>
+          <button class="item-tab" data-item="6">貢献</button>
+          <button class="item-tab" data-item="7">社会</button>
+          <button class="item-tab health-btn" data-item="health">健康</button>
+        </div>
+
+        <!-- 入力フォーム -->
+        <div class="input-form">
+          <h3 id="question-text" class="question">質問がここに表示されます</h3>
+
+          <!-- 色選択 -->
+          <div class="color-selector">
+            <p class="color-label">いまの感覚に合う色を選んでください</p>
+            <div class="color-grid">
+              <button class="color-btn" data-color="red" style="background-color: #FF4444;">赤</button>
+              <button class="color-btn" data-color="blue" style="background-color: #4488FF;">青</button>
+              <button class="color-btn" data-color="yellow" style="background-color: #FFCC00;">黄</button>
+              <button class="color-btn" data-color="green" style="background-color: #44CC44;">緑</button>
+              <button class="color-btn" data-color="orange" style="background-color: #FF8844;">オレンジ</button>
+              <button class="color-btn" data-color="pink" style="background-color: #FF66BB;">ピンク</button>
+              <button class="color-btn" data-color="purple" style="background-color: #9944FF;">紫</button>
+              <button class="color-btn" data-color="cyan" style="background-color: #44CCFF;">水色</button>
+            </div>
+          </div>
+
+          <!-- スライダー -->
+          <div class="slider-container">
+            <p class="slider-label">満足度を選んでください</p>
+            <input
+              type="range"
+              id="satisfaction-slider"
+              min="0"
+              max="10"
+              value="0"
+              class="slider"
+              disabled
+            >
+            <div class="slider-display">
+              <span id="slider-value" class="slider-value">まだ入力していません</span>
+            </div>
+            <div class="slider-labels">
+              <span class="slider-label-min">1</span>
+              <span class="slider-label-max">10</span>
+            </div>
+          </div>
+
+          <div class="input-note">
+            <p><strong>1：</strong>満たされていない</p>
+            <p><strong>10：</strong>とても満たされている</p>
+          </div>
+
+          <button id="btn-complete-input" class="btn btn-primary btn-lg" disabled>
+            ライフチャートを完成させる
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 完成画面 -->
+    <div id="screen-complete" class="screen">
+      <div class="container">
+        <div class="complete-content">
+          <h2>いまのあなたの<br>ライフチャートが完成しました</h2>
+
+          <div class="chart-with-info">
+            <div class="chart-display">
+              <svg id="chart-final" width="240" height="240" viewBox="0 0 240 240" class="chart-final">
+                <!-- チャートがここに描画される -->
+              </svg>
+            </div>
+            <div class="chart-info">
+              <div class="info-row">
+                <span id="complete-name" class="info-label"></span>
+              </div>
+              <div class="info-row">
+                <span id="complete-date" class="info-label"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="screenshot-guide">
+            <p>名前と日付が入ったこの画面をスクリーンショットで保存しておくと、次回のチャートと見比べることができます。</p>
+          </div>
+
+          <button id="btn-reflection" class="btn btn-primary btn-lg">
+            振り返り質問に答える
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 振り返り画面 -->
+    <div id="screen-reflection" class="screen">
+      <div class="container">
+        <div class="reflection-content">
+          <div class="reflection-question">
+            <h3>1. 今のチャートを見て、まず感じたことは？</h3>
+            <textarea id="reflection-q1" placeholder="ここに記入してください" maxlength="500"></textarea>
+          </div>
+
+          <div class="reflection-question">
+            <h3>2. 満たされていると感じるのはどの項目ですか？</h3>
+            <textarea id="reflection-q2" placeholder="ここに記入してください" maxlength="500"></textarea>
+          </div>
+
+          <div class="reflection-question">
+            <h3>3. これから大切にしたい項目はどれですか？（最大3つまで）</h3>
+            <textarea id="reflection-q3" placeholder="ここに記入してください" maxlength="500"></textarea>
+          </div>
+
+          <div class="reflection-question">
+            <h3>4. その項目の満足度が1点上がっているとしたら、どんな状態になっていますか？</h3>
+            <textarea id="reflection-q4" placeholder="ここに記入してください" maxlength="500"></textarea>
+          </div>
+
+          <div class="reflection-question">
+            <h3>自分へのメモ欄</h3>
+            <p class="question-subtitle">今の自分に残しておきたいこと</p>
+            <textarea id="memo" placeholder="ここに記入してください" maxlength="500"></textarea>
+          </div>
+
+          <button id="btn-complete" class="btn btn-primary btn-lg">
+            診断を完了する
+          </button>
+
+          <div class="line-section">
+            <p>このチャートをどう活かすか、次のヒントをLINEで受け取れます。</p>
+            <a href="https://example.com" target="_blank" class="btn btn-primary">
+              ライフチャートの活かし方をLINEで見る
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="svg-chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
