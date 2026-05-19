@@ -305,9 +305,7 @@ const App = {
     document.getElementById(`screen-${screenName}`).classList.add('active');
 
     // スクリーン表示時の初期化
-    if (screenName === 'complete') {
-      this.renderCompleteScreen();
-    } else if (screenName === 'input') {
+    if (screenName === 'input') {
       this.updateChart();
     }
   },
