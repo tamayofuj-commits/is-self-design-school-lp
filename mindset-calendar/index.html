@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="theme-color" content="#fbf7f4" />
+<title>お金と私に愛される脳内プログラミング 進化版 ｜ Money Brain Lab.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================
+   22日間 マインドセット・ワーク
+   カラー：白 / 上品なピンク / ゴールド
+   ========================================================= */
+:root{
+  --bg:        #fbf7f4;
+  --bg-2:      #f6ebe8;
+  --card:      #ffffff;
+  --ink:       #4a3f3a;
+  --ink-soft:  #8a7d76;
+  --pink:      #e7b6b6;
+  --pink-deep: #d98c97;
+  --gold:      #c2a25a;
+  --gold-soft: #e8d9b0;
+  --line:      #efe3dc;
+  --shadow:    0 10px 40px rgba(160,120,110,.16);
+}
+
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; padding:0; height:100%; overscroll-behavior:none; }
+body{
+  font-family:"Noto Serif JP", serif;
+  color:var(--ink);
+  background:radial-gradient(120% 80% at 50% -10%, var(--bg-2) 0%, var(--bg) 55%) fixed;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* 1画面固定（スクロール禁止） */
+.app{
+  height:100svh; height:100dvh; min-height:100vh;
+  width:100%; max-width:480px; margin:0 auto;
+  display:flex; flex-direction:column;
+  padding:calc(env(safe-area-inset-top) + 12px) 14px calc(env(safe-area-inset-bottom) + 12px);
+  overflow:hidden;
+}
+
+/* ヘッダー */
+.head{
+  flex:0 0 auto; display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding:2px 4px 10px;
+}
+.head .brand{
+  font-family:"Cormorant Garamond", serif; font-style:italic;
+  font-size:15px; letter-spacing:.04em; color:var(--gold);
+}
+.head .head-btns{ display:flex; align-items:center; gap:7px; }
+.head .today-btn{
+  border:1px solid var(--gold-soft);
+  background:linear-gradient(180deg,#fff,#fff8ee);
+  color:var(--gold); font-family:"Noto Sans JP",sans-serif;
+  font-size:11px; font-weight:700; letter-spacing:.06em;
+  padding:6px 12px; border-radius:999px; cursor:pointer; white-space:nowrap;
+}
+.head .today-btn.ghost{
+  background:#fff; border-color:var(--line); color:var(--pink-deep);
+}
+.head .today-btn:active{ transform:scale(.96); }
+
+/* カード */
+.card{
+  flex:1 1 auto; min-height:0;
+  background:var(--card); border-radius:26px;
+  box-shadow:var(--shadow); border:1px solid var(--line);
+  display:flex; flex-direction:column; overflow:hidden; position:relative;
+}
+.card::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:3px;
+  background:linear-gradient(90deg,var(--gold-soft),var(--gold),var(--gold-soft)); opacity:.8;
+}
+
+/* 日付バー */
+.daybar{
+  flex:0 0 auto; display:flex; align-items:baseline; justify-content:center;
+  gap:12px; padding:15px 18px 6px;
+}
+.daybar .dnum{
+  font-family:"Cormorant Garamond", serif; font-size:38px; line-height:1;
+  font-weight:500; color:var(--pink-deep);
+}
+.daybar .dlabel{
+  font-family:"Noto Sans JP",sans-serif; font-size:10px; letter-spacing:.3em;
+  color:var(--gold); text-transform:uppercase; font-weight:700;
+}
+
+/* タブ */
+.tabs{
+  flex:0 0 auto; display:flex; gap:6px; padding:4px 16px 8px; justify-content:center;
+}
+.tab{
+  font-family:"Noto Sans JP",sans-serif; font-size:12px; font-weight:700; letter-spacing:.08em;
+  color:var(--ink-soft); background:transparent; border:none;
+  padding:8px 18px; border-radius:999px; cursor:pointer; transition:.18s;
+}
+.tab.active{
+  color:#fff; background:linear-gradient(180deg,var(--pink),var(--pink-deep));
+  box-shadow:0 4px 14px rgba(217,140,151,.4);
+}
+
+/* パネル領域 */
+.panels{ flex:1 1 auto; min-height:0; position:relative; }
+.panel{ position:absolute; inset:0; display:none; flex-direction:column; padding:4px 20px 16px; }
+.panel.active{ display:flex; }
+
+/* --- ワーク（全ページ共通の固定サイズ・左揃え。長い時だけ本文エリア内でスクロール） --- */
+.work-area{
+  flex:1 1 auto; min-height:0;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+.work-area::-webkit-scrollbar{ width:0; height:0; }   /* スクロールバーは隠す */
+.work-fit{ width:100%; text-align:left; padding:2px 0 6px; }
+.work-note{
+  font-family:"Noto Sans JP",sans-serif; font-size:13px; letter-spacing:.04em;
+  color:var(--pink-deep); margin:0 0 8px; line-height:1.6;
+}
+.work-title{
+  font-size:20px; font-weight:600; color:var(--gold);
+  line-height:1.6; letter-spacing:.01em; margin:0 0 14px;
+  white-space:pre-wrap; word-break:break-word;
+}
+.work-body{
+  font-size:16px; font-weight:500; color:var(--ink);
+  line-height:1.95; letter-spacing:.01em;
+  white-space:pre-wrap; word-break:break-word;
+}
+/* スクロール可能なときに下端をふんわりフェード */
+.work-area{
+  -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 10px, #000 calc(100% - 14px), transparent 100%);
+          mask-image:linear-gradient(180deg, transparent 0, #000 10px, #000 calc(100% - 14px), transparent 100%);
+}
+
+/* --- メモ（日付ごとに履歴を貯める） --- */
+.memo-scroll{
+  flex:1 1 auto; min-height:0; display:flex; flex-direction:column;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+.memo-scroll::-webkit-scrollbar{ width:0; height:0; }
+.memo-head{ flex:0 0 auto; display:flex; align-items:baseline; justify-content:space-between; margin:2px 0 8px; }
+.memo-head .lbl{
+  font-family:"Noto Sans JP",sans-serif; font-size:12px; font-weight:700; letter-spacing:.08em; color:var(--pink-deep);
+}
+.memo-head .memo-date{ color:var(--gold); font-size:11px; letter-spacing:.04em; }
+.memo-head .saved{
+  font-family:"Noto Sans JP",sans-serif; font-size:10px; color:var(--ink-soft); opacity:0; transition:.3s;
+}
+.memo-head .saved.show{ opacity:1; }
+.memo-area{
+  flex:0 0 auto; height:150px; width:100%; resize:none;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#fffdfb,#fff7f4);
+  border-radius:16px; padding:14px 15px;
+  font-family:"Noto Serif JP",serif; font-size:15px; line-height:1.9; color:var(--ink); outline:none;
+}
+.memo-area:focus{ border-color:var(--pink); box-shadow:0 0 0 3px rgba(231,182,182,.25); }
+.memo-area::placeholder{ color:#c9bcb4; }
+
+/* これまでの記録（前回までの同じ日のメモ） */
+.memo-past{ flex:0 0 auto; padding-top:6px; }
+.memo-past .past-ttl{
+  display:flex; align-items:center; gap:8px;
+  font-family:"Noto Sans JP",sans-serif; font-size:11px; font-weight:700; letter-spacing:.1em;
+  color:var(--ink-soft); margin:14px 2px 6px;
+}
+.memo-past .past-ttl::before,
+.memo-past .past-ttl::after{ content:""; flex:1 1 auto; height:1px; background:var(--line); }
+.past-item{ border:1px solid var(--line); border-radius:14px; background:#fff; padding:11px 14px; margin:8px 0; }
+.past-item .pd{
+  font-family:"Noto Sans JP",sans-serif; font-size:11px; font-weight:700; color:var(--gold); letter-spacing:.06em; margin-bottom:5px;
+}
+.past-item .pt{
+  font-family:"Noto Serif JP",serif; font-size:14px; color:var(--ink); line-height:1.8; white-space:pre-wrap; word-break:break-word;
+}
+.memo-past .none{
+  text-align:center; color:var(--ink-soft); font-family:"Noto Serif JP",serif; font-size:12px; line-height:1.8; padding:16px 8px;
+}
+
+/* フッターナビ */
+.nav{ flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 4px 2px; }
+.nav button{ font-family:"Noto Sans JP",sans-serif; cursor:pointer; border-radius:999px; transition:.15s; }
+.nav .arrow{
+  flex:0 0 auto; width:46px; height:46px; border:1px solid var(--line);
+  background:#fff; color:var(--pink-deep); font-size:18px; box-shadow:0 4px 12px rgba(160,120,110,.1);
+}
+.nav .arrow:disabled{ opacity:.3; cursor:default; }
+.nav .arrow:active:not(:disabled){ transform:scale(.93); }
+.nav .index-btn{
+  flex:1 1 auto; height:46px; border:1px solid var(--gold-soft);
+  background:linear-gradient(180deg,#fff,#fffaf0); color:var(--gold);
+  font-size:12px; font-weight:700; letter-spacing:.14em;
+}
+.nav .index-btn:active{ transform:scale(.98); }
+
+/* 一覧シート */
+.sheet-mask{
+  position:fixed; inset:0; background:rgba(74,63,58,.4); backdrop-filter:blur(3px);
+  display:none; align-items:flex-end; justify-content:center; z-index:50;
+}
+.sheet-mask.open{ display:flex; }
+.sheet{
+  width:100%; max-width:480px; background:var(--bg);
+  border-radius:26px 26px 0 0; box-shadow:0 -10px 40px rgba(0,0,0,.2);
+  padding:18px 18px calc(env(safe-area-inset-bottom) + 22px);
+  max-height:82svh; overflow:auto; animation:rise .25s ease;
+}
+@keyframes rise{ from{ transform:translateY(20px); opacity:.6 } to{ transform:none; opacity:1 } }
+.sheet h2{ font-size:15px; font-weight:600; text-align:center; color:var(--gold); letter-spacing:.1em; margin:4px 0 16px; }
+.cover-pick{
+  width:100%; text-align:left; border:1px solid var(--line); background:#fff;
+  border-radius:14px; padding:12px 16px; margin-bottom:14px;
+  font-family:"Noto Serif JP",serif; font-size:14px; color:var(--ink); cursor:pointer;
+}
+.cover-pick.cur{ border-color:var(--pink); background:#fff6f6; }
+.grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:9px; }
+.grid .cell{
+  aspect-ratio:1/1; border:1px solid var(--line); background:#fff; border-radius:14px;
+  font-family:"Cormorant Garamond",serif; font-size:19px; color:var(--ink);
+  display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative;
+}
+.grid .cell.cur{
+  border-color:var(--pink-deep); background:linear-gradient(180deg,var(--pink),var(--pink-deep));
+  color:#fff; box-shadow:0 4px 12px rgba(217,140,151,.4);
+}
+.grid .cell.done::after{
+  content:""; position:absolute; top:6px; right:6px; width:6px; height:6px; border-radius:50%; background:var(--gold);
+}
+.grid .cell.cur.done::after{ background:#fff; }
+.sheet .close{
+  display:block; width:100%; margin-top:18px; border:none; background:transparent;
+  color:var(--ink-soft); font-family:"Noto Sans JP",sans-serif; font-size:12px; letter-spacing:.1em; padding:10px; cursor:pointer;
+}
+
+/* メモ ふりかえり一覧 */
+.memo-item{
+  width:100%; text-align:left; border:1px solid var(--line); background:#fff;
+  border-radius:14px; padding:13px 15px; margin-bottom:10px; cursor:pointer; display:block;
+}
+.memo-item:active{ background:#fff8f6; }
+.memo-item .mi-head{
+  font-family:"Noto Sans JP",sans-serif; font-size:11px; font-weight:700;
+  color:var(--pink-deep); letter-spacing:.04em; margin-bottom:8px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.memo-item .mi-entry{ padding:8px 0; border-top:1px solid var(--line); }
+.memo-item .mi-entry:first-of-type{ border-top:none; }
+.memo-item .mi-date{
+  font-family:"Noto Sans JP",sans-serif; font-size:10px; font-weight:700;
+  color:var(--gold); letter-spacing:.06em; margin-bottom:4px;
+}
+.memo-item .mi-text{
+  font-family:"Noto Serif JP",serif; font-size:13px; color:var(--ink);
+  line-height:1.75; white-space:pre-wrap; word-break:break-word;
+}
+.memo-empty{
+  text-align:center; color:var(--ink-soft); font-family:"Noto Serif JP",serif;
+  font-size:13px; line-height:1.9; padding:26px 8px; white-space:pre-wrap;
+}
+
+/* 表紙モード（中央寄せ・大きめ・固定サイズ） */
+.app.cover .daybar,
+.app.cover .tabs,
+.app.cover .work-note,
+.app.cover .panel.memo{ display:none; }
+.app.cover .work-area{
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+  -webkit-mask-image:none; mask-image:none;
+}
+.app.cover .work-fit{ text-align:center; }
+.app.cover .work-title{
+  font-family:"Cormorant Garamond",serif; font-style:italic; color:var(--gold);
+  font-size:15px; letter-spacing:.12em; font-weight:500; margin:0 0 26px; line-height:1.4;
+}
+.app.cover .work-body{ font-size:26px; font-weight:600; line-height:2.0; color:var(--ink); }
+.app.cover .card::after{
+  content:""; position:absolute; left:50%; bottom:26px; transform:translateX(-50%);
+  width:38px; height:1px; background:var(--gold-soft);
+}
+</style>
+</head>
+
+<body>
+<div class="app" id="app">
+
+  <header class="head">
+    <span class="brand" id="brand">Money Brain Lab.</span>
+    <div class="head-btns">
+      <button class="today-btn ghost" id="memoListBtn">ふりかえり</button>
+      <button class="today-btn" id="todayBtn">今日</button>
+    </div>
+  </header>
+
+  <main class="card" id="card">
+
+    <div class="daybar">
+      <span class="dnum" id="dnum">1</span>
+      <span class="dlabel" id="dlabel">DAY</span>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="work">ワーク</button>
+      <button class="tab" data-tab="memo">感想メモ</button>
+    </div>
+
+    <div class="panels">
+      <!-- ワーク -->
+      <section class="panel work active" id="panelWork">
+        <div class="work-area" id="workArea">
+          <div class="work-fit" id="workFit">
+            <p class="work-note"  id="workNote"></p>
+            <h1 class="work-title" id="workTitle"></h1>
+            <div class="work-body" id="workBody"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- メモ -->
+      <section class="panel memo" id="panelMemo">
+        <div class="memo-scroll" id="memoScroll">
+          <div class="memo-head">
+            <span class="lbl">今日のメモ <span class="memo-date" id="memoToday"></span></span>
+            <span class="saved" id="savedTag">保存しました</span>
+          </div>
+          <textarea class="memo-area" id="memoArea"
+            placeholder="今日の気づき・感じたこと…&#10;書いた内容は日付ごとに自動保存され、次の周でも見返せます。"></textarea>
+          <div class="memo-past" id="memoPast"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <nav class="nav">
+    <button class="arrow" id="prevBtn" aria-label="前へ">‹</button>
+    <button class="index-btn" id="indexBtn">日を選ぶ</button>
+    <button class="arrow" id="nextBtn" aria-label="次へ">›</button>
+  </nav>
+</div>
+
+<div class="sheet-mask" id="sheetMask">
+  <div class="sheet" id="sheet">
+    <h2>ワークを選ぶ</h2>
+    <button class="cover-pick" id="coverPick">表紙にもどる</button>
+    <div class="grid" id="grid"></div>
+    <button class="close" id="closeSheet">とじる</button>
+  </div>
+</div>
+
+<!-- 感想メモ ふりかえり -->
+<div class="sheet-mask" id="memoMask">
+  <div class="sheet" id="memoSheet">
+    <h2>感想メモ ふりかえり</h2>
+    <div id="memoList"></div>
+    <button class="close" id="closeMemo">とじる</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     データ：表紙 ＋ 22日分（原文を1文字も削らず収録）
+       type  : "Mission" / "Question"
+       note  : 補足ラベル（無ければ省略）
+       title : 見出し（ワークの問い・指示）
+       body  : 本文
+     ============================================================ -->
+<script>
+const DATA = {
+  brand: "Money Brain Lab.",
+
+  /* ▼ 表紙 */
+  cover: {
+    title: "Money Brain Lab.",
+    body: `お金と私に愛される\n脳内プログラミング\n\n― 進化版 ―`
+  },
+
+  days: [
+    { day:1, type:"Mission",
+      title:`氏神様のところに日頃の感謝や、今の決意を伝えに行く`,
+      body:`2018年3月。初めてビジネスの売上がたった月、初めて「氏神様」というものの存在を知り 初めて会いに行きました。
+日常への感謝と、私はこれをやります! 応援してください! って伝えに行って見てください。
+＊オフィスが自宅外の方は、オフィスの方にも` },
+
+    { day:2, type:"Question",
+      title:`今、この瞬間、「お金」と引き換えに得ている豊かさは何?`,
+      body:`このワークは、私がやってもらってきて、一番素早く効果があったワークです。
+お金に愛されない人は、「お金が減ること」へのフォーカスが多すぎて、「それと交換に入ってきた豊かさ」が視えてません。
+家に住める、電気が使える、携帯が使える・・・
+これらは全て、それを創ってくれたビジネスと交換価値のあるお金が存在するから成り立ってます。
+私は、これが身につきすぎていて、シャワーから出るお湯を見ても、今住んでる家を見ても、「ありがたいな〜」と勝手に頭に浮かびます。w
+1週間でいいので、1日10分考えて見てください。` },
+
+    { day:3, type:"Mission",
+      title:`お財布に年齢分以上のお札を入れる`,
+      body:`使い古されたミッションですが、やってる人は本当に少ない。
+ビジネスをしてる人は、自分の商品価格以上を入れてみてください。
+「視覚情報」は潜在意識の書き換えにとっても有効です。
+お金がいっぱいあるんだという「現実」を見せてあげてください。
+できたら、写真をアップしてもらえるってみんなが喜びます。` },
+
+    { day:4, type:"Question", note:"(1日3人以上)",
+      title:`人生で感謝したい人は誰?
+なんて言って感謝を伝えたい?`,
+      body:`今の自分をここまで運んでくれたのは、誰のおかげですか?
+誰がいたからですか?
+1日3人以上ピックアップして、なぜ、感謝したいのか? なんて言って感謝を伝えたいのか? を書き出してみてください。
+できれば、その人に手紙やLINEを送ってみてください
+「感謝」は「する」のではなくて、「湧く」もの。そして、「感謝」とは、人に喜ばれるためにするものでも、お金が入って来るためにするものでもなく、「今の状態がどれだけ恵まれているか」に「気づく」ためのものです。最大のエゴだと思って、このワークをやってみてください` },
+
+    { day:5, type:"Mission",
+      title:`寝起きと寝る前、鏡に近づいて、瞳に映った自分に「私は私が大好きです」と言う`,
+      body:`2年半くらい前に教えてもらった魔法の1つです。
+瞳に映ってる自分に、自分が話しかけると言う行為を通して、「他者」からも「自分」からもその言葉をかけられているというように、脳が錯覚します。
+ちなみに、「潜在意識」は自分も他人も認識しません。
+寝起きと寝る前は、脳波が「シータ波」という波動を出しています。
+この波動の時が、最も潜在意識にアクセスしやすいのでオススメです` },
+
+    { day:6, type:"Question",
+      title:`どんな人と一緒にいる時が安心する?
+それは、なぜ?`,
+      body:`大切な人を、大切にしないと大事になる。
+自分にとって、「どうでもいい人」の目を気にして「行動」する時は、100%失敗する。
+大切な人は、精神的だけじゃなくて物理的にも一緒にいる時間があるといい。
+取る「行動」を最も効率よく「結果」に繋げるのは、「安心感」があるか、どうか。
+じゃあ、自分は、どんな人と一緒にいると安心する? それは、なぜ?
+それが、細かくわかったら、失敗する「行動」を取る方が難しい。` },
+
+    { day:7, type:"Question",
+      title:`今日、
+・私が喜んだ瞬間はどんな瞬間だった?
+・その瞬間をくれた人・モノはなんだった?`,
+      body:`お金に愛される人は、自分が「どんな瞬間に喜びを感じるか?」 の引き出しが多い人。
+「どんな状況でも、幸せな自分を創れたら勝ち。」
+ビジネスをするのも一緒。
+相手の「喜び」を見つけることがビジネスのスタートだとしたら、自分の「喜び」を見つけられない人に他人の「喜び」を見つけるのは難しい。
+喜び上手は、喜びを運ぶ。` },
+
+    { day:8, type:"Mission",
+      title:`1日1個、家の中の自分を喜ばせないものを捨てる`,
+      body:`家に自分を「喜ばせないもの」があると、お金に愛されません。
+もし、入ってきたとしてもすぐに出て行ってしまうという現象が起こります。
+ポイントは、「今後使うかもしれない」とか「買ったばかりだから」とかという理由を除外して、「これは、今、自分を喜ばせてるかどうか?」 でジャッジしてみてください。
+どんなものが喜ばせてなかったのか?
+なぜ、それを持っていたかのか?
+前提を掘ってみて、次に生かしましょう!` },
+
+    { day:9, type:"Question",
+      title:`許せない「出来事」はどんなこと?
+・その時の自分は、なんて声をかけられたら心が軽くなった?`,
+      body:`こちらは、黒魔術。w
+今までの人生、他者にその言葉を言わせるための行動をして頑張ってきました。
+もしかしたら、その言葉をもらったことがあるかもしれない。
+だけど、それで、あなたは「満たされた?」
+この言葉は、あなたが決して、心から「他人」にかけたことがない言葉でもあります。
+それを、自分にかけてあげてくださいね。
+違和感があれば、大切な人に言ってあげてください。
+その潜在意識の波を、ここで止めて、本当の行動の自由を手に入れてください。` },
+
+    { day:10, type:"Mission",
+      title:`子供の頃 好きだったものを大人買いする`,
+      body:`あなたが子供の頃、好きだったものや、集めたかったものはなんですか?
+レターセット、シール、駄菓子、スタンプ、かわいい折紙、ゲームのソフト、、
+当時思いっきり買えなかったものを、買ってみましょう。
+今、いらなくても大丈夫
+いらなければ、誰かにあげましょう。` },
+
+    { day:11, type:"Question",
+      title:`今日関わった人の素敵なところはどんなとこ?`,
+      body:`その素敵だな〜って思うところを、言語化してみて。
+それは、自分もすでに持っているもの。
+少し先の未来で、「あ〜、私持ってた!」 って気づくもの。
+花に可愛いと思う人は、自分に対しても可愛いと言っていると同じ。
+潜在意識は、他人と自分の区別がつきません。
+出会う人は、自分の持ってるものを魅せてくれている可能性が高いです。
+今日関わった人の、素敵なところは、すでにあなたが持っています。
+自分の魅力を思い出して。` },
+
+    { day:12, type:"Mission",
+      title:`親に幼い頃、言いたかったことを書き出す`,
+      body:`これは、強烈な潜在意識の書き換えの方法の1つです。
+「この時、こうされて、こう感じた。」
+「だから、この時、こうして欲しかった。」
+人生の前半は、その復讐で生きている人が多いです。
+できれば、親に渡してみてください。` },
+
+    { day:13, type:"Question",
+      title:`人生で大切にしたい人は誰?
+今気にしている人はあなたの人生に必要な人?`,
+      body:`「大切にする人を決めておく」
+これがお金に愛される人の行動パターンです。
+どんな人とも仲良くする、とか、親だから大切にする、とか、そういう概念を抜きにして、これから生きていく中であなたが大切にしたい人は誰ですか?
+書き出してみてください。
+そして、その他の人にそんなに一生懸命にならなくていいですw` },
+
+    { day:14, type:"Mission",
+      title:`「ありがとう」を3人以上からもらう`,
+      body:`お金に愛される人は、自分も人も喜ばせるのが大好き。
+＊ちなみに潜在意識的には、自分も他人も違いがありません。
+ほんのささやかな行動で、目の前の人を喜ばせて「ありがとう」をもらってください。
+さて、今日は、誰にどんなことをして「ありがとう」をもらいましたか?
+そのとき、どんな気分でしたか?` },
+
+    { day:15, type:"Question",
+      title:`今日は、どんなプチ贅沢をした?`,
+      body:`自分に贅沢をさせてあげると、お金って自分を喜ばすものになる。
+お金って自分だから。
+自分が喜び、お金も喜ぶ。
+お金って自分だから。
+自分を喜ばせてる人はお金を喜ばせてるのと一緒。
+お金 ＝ 喜びの方程式を手に入れれば、ビジネスも人生も加速します。
+いよいよ、2/3` },
+
+    { day:16, type:"Question",
+      title:`自分を可愛く。美しくする・喜ばせる、アイテム・サービスは何?`,
+      body:`お金に愛される人は、自分を可愛く・美しくするのが好き
+男性であれば、清潔感がある人がこれに該当します。
+今、着てる服は、理想の自分だったら着ている服ですか?
+今のメイクは、理想の自分だったらしてるメイクですか?
+可愛くする「努力」 してますか?
+清潔感を出す「努力」 してますか?
+今日は、自分を美しくするため、可愛くするため、清潔感を感じてもらうため、どんなものやサービスが見つかった?` },
+
+    { day:17, type:"Mission",
+      title:`毎月○○万円(好きな額で)入ってくる○○ (好きな職業で)だったら、どんなお店に行く? そこに行く。`,
+      body:`今の常識内でとった行動が理想の自分へと連れて行くことはありません。
+少し背伸びして、あなたが欲しい収入、あなたの理想の肩書きをすでに今手に入れているとしたら、どんな店に行きますか?
+どんなランチを食べる?
+どんな服を着る?
+どんな人と付き合う?
+今できる範囲でやって見てください。
+自分の魔法を取り戻すから。
+(泣くことあるので、ハンカチ持ってって。w)` },
+
+    { day:18, type:"Question",
+      title:`あなたが人生において大切にしてる 人・ものは何?`,
+      body:`人生って、つまり「時間」だ。
+「死」とは、時間が0になること。
+いつか必ず0が来るとしたら、今この瞬間を自分の「大切な人・もの」のことを考えたり、観たり、触れたり、そんな時間が1秒でも増えることって豊かな人生だと思う。
+「お金」って、そんな大切な人との時間をより心地よくしてくれたり、そのもの自体を手に入れたりするための自分が豊かさを感じるための「道具」の1つだ。
+「お金」という数値だけに惑わされて目の前の大切な人・ものとの「時間」を置き去りにしてませんか?` },
+
+    { day:19, type:"Mission",
+      title:`タダ働きする`,
+      body:`「労働」と「お金」を切り離すワークです。
+例えば、残業代をもらわずに、残業する。
+これがあったらいいんじゃないか? というものを頼まれてもないのにやってみる。
+人んちのトイレ掃除をする。
+飲食店に行った時、テーブルを少し片付けてから帰る。
+もちろん、スレッドで、無料モニター募集をかけていただいてもいいです。
+(お互いに喜びがあれば、クロージング可。)
+ぜひ、トライしてみてください。` },
+
+    { day:20, type:"Question",
+      title:`「お金持ち」「お金」ってどんなイメージ???`,
+      body:`お金持ちになりたい! そう願う人が多い中で、なれない人が多いのはなぜだろう?
+それは、あなたの中で、「お金持ち」ってどんな人なのか 言語化されてないから。
+And、あなたの「お金持ち」 の概念の中に、「そうなりたくない!」 というネガティブな、不快なイメージが混じっているから。
+「お金」も一緒。まずは、自分自身の「お金持ち」や「お金」に関するイメージを書き出して、「不快」なものがあれば、それとは反対のワードに置き換えてみてください。
+(性格が悪い→優しいなど)
+その前提を持った、「幸せなお金持ち」が現実に現れるから` },
+
+    { day:21, type:"Mission",
+      title:`1万円札を見て、触って、感じたことを書いてみる`,
+      body:`あなたのお金のイメージはどんなものですか?
+怖い?
+大切?
+楽しい?
+その紙切れのために、自分の時間を使うって本当にしたいこと??` },
+
+    { day:22, type:"Question",
+      title:`今日が人生の最期の日なら何をする?`,
+      body:`お金の奴隷からの解放ミッション。
+お金よりも何よりも大切なのは「時間」です。
+子どもと一緒に暮らせる時間。
+旦那さんとご飯が食べられる時間。
+友人と遊びに行く時間。
+両親にありがとうをいう時間。
+美味しいものを食べる時間。
+私の中で「価値がある」という時間を増やしてあげてください。
+それをするためのお金は十分にあります。
+＊これ、やってねwww` }
+  ]
+};
+</script>
+
+<!-- ============================================================
+     アプリ本体
+     ============================================================ -->
+<script>
+(function(){
+  "use strict";
+
+  const app        = document.getElementById("app");
+  const card       = document.getElementById("card");
+  const brandEl    = document.getElementById("brand");
+  const dnum       = document.getElementById("dnum");
+  const dlabel     = document.getElementById("dlabel");
+  const tabsEl     = document.getElementById("tabs");
+  const tabBtns    = tabsEl.querySelectorAll(".tab");
+  const panelWork  = document.getElementById("panelWork");
+  const panelMemo  = document.getElementById("panelMemo");
+  const workArea   = document.getElementById("workArea");
+  const workFit    = document.getElementById("workFit");
+  const workNote   = document.getElementById("workNote");
+  const workTitle  = document.getElementById("workTitle");
+  const workBody   = document.getElementById("workBody");
+  const memoArea   = document.getElementById("memoArea");
+  const memoToday  = document.getElementById("memoToday");
+  const memoPast   = document.getElementById("memoPast");
+  const memoScroll = document.getElementById("memoScroll");
+  const savedTag   = document.getElementById("savedTag");
+  const prevBtn    = document.getElementById("prevBtn");
+  const nextBtn    = document.getElementById("nextBtn");
+  const indexBtn   = document.getElementById("indexBtn");
+  const todayBtn   = document.getElementById("todayBtn");
+  const sheetMask  = document.getElementById("sheetMask");
+  const grid       = document.getElementById("grid");
+  const coverPick  = document.getElementById("coverPick");
+  const closeSheet = document.getElementById("closeSheet");
+  const memoListBtn= document.getElementById("memoListBtn");
+  const memoMask   = document.getElementById("memoMask");
+  const memoList   = document.getElementById("memoList");
+  const closeMemo  = document.getElementById("closeMemo");
+
+  const TOTAL   = DATA.days.length;
+  const LS_POS  = "mindset.pos";
+  const LS_FIRST= "mindset.firstDate";
+  const LS_MEMO = "mindset.memo.";
+
+  let pos = -1;       // -1: 表紙 / 0..TOTAL-1
+  let tab = "work";
+
+  brandEl.textContent = DATA.brand || "Mindset Work";
+
+  /* ---- 感想メモ：日付ごとの履歴で保存（何周もして変化を見返せる） ---- */
+  function todayKey(){
+    const n = new Date();
+    return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0");
+  }
+  function fmtDate(s){
+    if(!s) return "日付なし";
+    const p = s.split("-");
+    if(p.length<3) return s;
+    return p[0]+"年"+Number(p[1])+"月"+Number(p[2])+"日";
+  }
+  function getEntries(day){
+    const raw = localStorage.getItem(LS_MEMO + day);
+    if(!raw) return [];
+    try{
+      const v = JSON.parse(raw);
+      if(Array.isArray(v)) return v;
+      if(typeof v === "string") return v.trim() ? [{d:"", t:v}] : [];
+    }catch(e){
+      return raw.trim() ? [{d:"", t:raw}] : [];   // 旧形式（ただの文字列）を救済
+    }
+    return [];
+  }
+  function setEntries(day, arr){
+    if(arr && arr.length) localStorage.setItem(LS_MEMO + day, JSON.stringify(arr));
+    else localStorage.removeItem(LS_MEMO + day);
+  }
+  function hasMemo(day){ return getEntries(day).some(e=>e.t && e.t.trim()); }
+
+  /* 今日のワーク番号（初回起動日からの経過日数で進む） */
+  function todayIndex(){
+    let first = localStorage.getItem(LS_FIRST);
+    const now = new Date();
+    const todayStr = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
+    if(!first){ localStorage.setItem(LS_FIRST, todayStr); first = todayStr; }
+    const [fy,fm,fd] = first.split("-").map(Number);
+    const f = new Date(fy, fm-1, fd);
+    const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const diff = Math.floor((t - f) / 86400000);
+    return Math.min(Math.max(diff, 0), TOTAL-1);
+  }
+
+  function render(){
+    if(pos < 0){
+      app.classList.add("cover");
+      brandEl.style.visibility = "hidden";
+      workNote.style.display = "none";
+      workTitle.style.display = "";
+      workTitle.textContent = DATA.cover.title || "";
+      workBody.textContent  = DATA.cover.body || "";
+    }else{
+      app.classList.remove("cover");
+      brandEl.style.visibility = "visible";
+      const d = DATA.days[pos];
+      dnum.textContent   = d.day;
+      dlabel.textContent = (d.type || "").toUpperCase();
+      workNote.textContent = d.note || "";
+      workNote.style.display = d.note ? "" : "none";
+      workTitle.textContent = d.title || "";
+      workTitle.style.display = d.title ? "" : "none";
+      workBody.textContent  = d.body || "";
+      renderMemo(d.day);
+    }
+    setTab(tab, true);
+    updateNav();
+    workArea.scrollTop = 0;          // ページを変えたら本文は先頭から
+    if(memoScroll) memoScroll.scrollTop = 0;
+    localStorage.setItem(LS_POS, String(pos));
+  }
+
+  /* メモ画面：今日の入力欄＋これまでの記録（前回までの同じ日のメモ） */
+  function renderMemo(day){
+    const today = todayKey();
+    memoToday.textContent = "（" + fmtDate(today) + "）";
+    const entries = getEntries(day);
+    const mine = entries.find(e=>e.d===today);
+    memoArea.value = mine ? mine.t : "";
+
+    // 今日以外（前回までの記録）を新しい順に
+    const past = entries.filter(e=>e.d!==today && e.t && e.t.trim())
+                        .sort((a,b)=>(b.d||"").localeCompare(a.d||""));
+    memoPast.innerHTML = "";
+    if(past.length){
+      const ttl = document.createElement("div");
+      ttl.className = "past-ttl";
+      ttl.textContent = "これまでの記録（前回まで）";
+      memoPast.appendChild(ttl);
+      past.forEach(e=>{
+        const item = document.createElement("div");
+        item.className = "past-item";
+        const pd = document.createElement("div"); pd.className = "pd"; pd.textContent = fmtDate(e.d);
+        const pt = document.createElement("div"); pt.className = "pt"; pt.textContent = e.t;
+        item.appendChild(pd); item.appendChild(pt);
+        memoPast.appendChild(item);
+      });
+    }
+  }
+
+  function updateNav(){
+    prevBtn.disabled = (pos <= -1);
+    nextBtn.disabled = (pos >= TOTAL-1);
+  }
+
+  function setTab(name, silent){
+    tab = name;
+    tabBtns.forEach(b=>b.classList.toggle("active", b.dataset.tab===name));
+    panelWork.classList.toggle("active", name==="work");
+    panelMemo.classList.toggle("active", name==="memo");
+    if(name==="work" && !silent){
+      workArea.scrollTop = 0;
+    }
+  }
+  tabBtns.forEach(b=>{
+    b.addEventListener("click", ()=>{ setTab(b.dataset.tab); });
+  });
+
+  function go(p, asMemo){
+    pos = Math.min(Math.max(p, -1), TOTAL-1);
+    tab = (asMemo && pos>=0) ? "memo" : "work";
+    render();
+  }
+  prevBtn.addEventListener("click", ()=>go(pos-1));
+  nextBtn.addEventListener("click", ()=>go(pos+1));
+  todayBtn.addEventListener("click", ()=>go(todayIndex()));
+
+  /* メモ自動保存（今日の日付のエントリーを更新。過去の記録は消さない） */
+  let saveTimer = null;
+  memoArea.addEventListener("input", ()=>{
+    if(pos < 0) return;
+    const d = DATA.days[pos];
+    const today = todayKey();
+    const entries = getEntries(d.day);
+    const idx = entries.findIndex(e=>e.d===today);
+    const val = memoArea.value;
+    if(val.trim()){
+      if(idx>=0) entries[idx].t = val;
+      else entries.push({d:today, t:val});
+    }else if(idx>=0){
+      entries.splice(idx,1);   // 今日の分を空にしたら今日の分だけ削除
+    }
+    setEntries(d.day, entries);
+    savedTag.classList.add("show");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(()=>savedTag.classList.remove("show"), 1200);
+  });
+
+  /* 一覧シート */
+  function buildGrid(){
+    grid.innerHTML = "";
+    DATA.days.forEach((d,i)=>{
+      const cell = document.createElement("button");
+      cell.className = "cell";
+      cell.textContent = d.day;
+      if(i===pos) cell.classList.add("cur");
+      if(hasMemo(d.day)) cell.classList.add("done");
+      cell.addEventListener("click", ()=>{ closeSheetFn(); go(i); });
+      grid.appendChild(cell);
+    });
+    coverPick.classList.toggle("cur", pos===-1);
+  }
+  function openSheet(){ buildGrid(); sheetMask.classList.add("open"); }
+  function closeSheetFn(){ sheetMask.classList.remove("open"); }
+  indexBtn.addEventListener("click", openSheet);
+  closeSheet.addEventListener("click", closeSheetFn);
+  coverPick.addEventListener("click", ()=>{ closeSheetFn(); go(-1); });
+  sheetMask.addEventListener("click", e=>{ if(e.target===sheetMask) closeSheetFn(); });
+
+  /* 感想メモ ふりかえり一覧（日ごとに、過去の記録を日付つきで） */
+  function buildMemoList(){
+    memoList.innerHTML = "";
+    let any = false;
+    DATA.days.forEach((d,i)=>{
+      const entries = getEntries(d.day).filter(e=>e.t && e.t.trim());
+      if(!entries.length) return;
+      any = true;
+      entries.sort((a,b)=>(a.d||"").localeCompare(b.d||""));  // 古い順＝変化が分かる
+
+      const item = document.createElement("button");
+      item.className = "memo-item";
+      const head = document.createElement("div");
+      head.className = "mi-head";
+      head.textContent = "DAY " + d.day + "　" + (d.title ? d.title.replace(/\n/g," ") : "");
+      item.appendChild(head);
+
+      entries.forEach(e=>{
+        const ent = document.createElement("div");
+        ent.className = "mi-entry";
+        const ed = document.createElement("div"); ed.className = "mi-date"; ed.textContent = fmtDate(e.d);
+        const et = document.createElement("div"); et.className = "mi-text"; et.textContent = e.t;
+        ent.appendChild(ed); ent.appendChild(et);
+        item.appendChild(ent);
+      });
+
+      item.addEventListener("click", ()=>{ closeMemoFn(); go(i, true); });
+      memoList.appendChild(item);
+    });
+    if(!any){
+      const e = document.createElement("div");
+      e.className = "memo-empty";
+      e.textContent = "まだ感想メモがありません。\nワークを読んで感じたことを、\n「感想メモ」タブに残してみましょう。";
+      memoList.appendChild(e);
+    }
+  }
+  function openMemoSheet(){ buildMemoList(); memoMask.classList.add("open"); }
+  function closeMemoFn(){ memoMask.classList.remove("open"); }
+  memoListBtn.addEventListener("click", openMemoSheet);
+  closeMemo.addEventListener("click", closeMemoFn);
+  memoMask.addEventListener("click", e=>{ if(e.target===memoMask) closeMemoFn(); });
+
+  /* スワイプ送り */
+  let tsx=0, tsy=0;
+  card.addEventListener("touchstart", e=>{ tsx=e.touches[0].clientX; tsy=e.touches[0].clientY; }, {passive:true});
+  card.addEventListener("touchend", e=>{
+    if(tab!=="work") return;
+    const dx=e.changedTouches[0].clientX-tsx;
+    const dy=e.changedTouches[0].clientY-tsy;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5){
+      if(dx<0) go(pos+1); else go(pos-1);
+    }
+  }, {passive:true});
+
+  /* 起動 */
+  function start(){
+    todayIndex();
+    const saved = localStorage.getItem(LS_POS);
+    pos = (saved===null) ? -1 : parseInt(saved,10);
+    if(isNaN(pos)) pos = -1;
+    render();
+  }
+  start();
+})();
+</script>
+</body>
+</html>
