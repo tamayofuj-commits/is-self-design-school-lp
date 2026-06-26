@@ -1,0 +1,7 @@
+name = "money-brain-lab"
+compatibility_date = "2025-01-01"
+
+# 静的ファイル（index.html など）をそのまま配信する設定。
+# サーバー処理は無く、このフォルダの中身をWebサイトとして公開します。
+[assets]
+directory = "./"
