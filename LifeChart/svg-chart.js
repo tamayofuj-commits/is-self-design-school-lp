@@ -3,6 +3,8 @@
  * 8分割扇形チャート + 中央の健康項目を水位表現で描画
  */
 
+const NS = 'http://www.w3.org/2000/svg';
+
 const SVGChart = {
   // 8項目の名前（円形チャートの外側）
   items: [
@@ -16,34 +18,41 @@ const SVGChart = {
     '社会'
   ],
 
-  // デフォルトカラーマッピング
+  // デフォルトカラーマッピング（12色）
   colorMap: {
     red: '#FF4444',
-    blue: '#4488FF',
-    yellow: '#FFCC00',
-    green: '#44CC44',
     orange: '#FF8844',
-    pink: '#FF66BB',
+    yellow: '#FFCC00',
+    lime: '#A3D53A',
+    green: '#44CC44',
+    teal: '#22C1A5',
+    cyan: '#44CCFF',
+    blue: '#4488FF',
+    indigo: '#5B5BD6',
     purple: '#9944FF',
-    cyan: '#44CCFF'
+    pink: '#FF66BB',
+    brown: '#B07A54'
   },
 
   /**
    * チャートを描画
    * @param {string} svgId - SVG要素のID
    * @param {Object} data - {scores: [0-10], colors: ['red', ...], health: 0-10}
-   * @param {number} size - SVGのサイズ（160または240）
+   * @param {number} size - SVGのサイズ（描画座標系）
+   * @param {Object} options - {interactive: bool, selectedItem: 0-7|'health'}
    */
-  draw(svgId, data, size = 160) {
+  draw(svgId, data, size = 160, options = {}) {
     const svg = document.getElementById(svgId);
     if (!svg) return;
 
     // SVGをクリア
     svg.innerHTML = '';
 
+    // 基準サイズ160に対する拡大率（フォントや線幅を相対的に調整）
+    const scale = size / 160;
     const center = size / 2;
-    const outerRadius = size / 2 - 3;
-    const healthRadius = 32;
+    const outerRadius = size / 2 - 4 * scale;
+    const healthRadius = 34 * scale;
     const innerRadius = healthRadius;
 
     // グループの背景（グリッド）
@@ -62,32 +71,38 @@ const SVGChart = {
     }
 
     // ラベルを描画
-    this.drawLabels(svg, center, innerRadius, outerRadius);
+    this.drawLabels(svg, center, innerRadius, outerRadius, scale);
 
     // スコア数値を描画
-    this.drawScores(svg, center, innerRadius, outerRadius, data.scores, data.health);
+    this.drawScores(svg, center, innerRadius, outerRadius, data.scores, data.health, scale);
 
     // 中央に「健康」というテキストを描画
-    const healthText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    const healthText = document.createElementNS(NS, 'text');
     healthText.setAttribute('x', center);
-    healthText.setAttribute('y', center + 4);
+    healthText.setAttribute('y', center - 2 * scale);
     healthText.setAttribute('text-anchor', 'middle');
-    healthText.setAttribute('font-size', '12');
+    healthText.setAttribute('font-size', 12 * scale);
     healthText.setAttribute('font-weight', '500');
     healthText.setAttribute('fill', '#666666');
+    healthText.setAttribute('pointer-events', 'none');
     healthText.textContent = '健康';
     svg.appendChild(healthText);
+
+    // タップ選択用の当たり判定（インタラクティブ時のみ）
+    if (options.interactive) {
+      this.drawHitAreas(svg, center, innerRadius, outerRadius, scale, options.selectedItem);
+    }
   },
 
   /**
    * 背景グリッドを描画
    */
   drawBackground(svg, center, size, innerRadius, outerRadius) {
-    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const bg = document.createElementNS(NS, 'g');
     bg.setAttribute('id', 'background');
 
     // 外枠の円
-    const outerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    const outerCircle = document.createElementNS(NS, 'circle');
     outerCircle.setAttribute('cx', center);
     outerCircle.setAttribute('cy', center);
     outerCircle.setAttribute('r', outerRadius);
@@ -97,7 +112,7 @@ const SVGChart = {
     bg.appendChild(outerCircle);
 
     // 内側の円
-    const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    const innerCircle = document.createElementNS(NS, 'circle');
     innerCircle.setAttribute('cx', center);
     innerCircle.setAttribute('cy', center);
     innerCircle.setAttribute('r', innerRadius);
@@ -114,7 +129,7 @@ const SVGChart = {
       const x2 = center + outerRadius * Math.cos(angle);
       const y2 = center + outerRadius * Math.sin(angle);
 
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      const line = document.createElementNS(NS, 'line');
       line.setAttribute('x1', x1);
       line.setAttribute('y1', y1);
       line.setAttribute('x2', x2);
@@ -131,7 +146,7 @@ const SVGChart = {
    * 1つの扇形セグメントを描画
    */
   drawSegment(svg, index, center, innerRadius, outerRadius, score, color) {
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const group = document.createElementNS(NS, 'g');
     group.setAttribute('id', `segment-${index}`);
 
     // スコア（1-10）を割合に変換（0-1）
@@ -154,10 +169,11 @@ const SVGChart = {
       fillOuterRadius
     );
 
-    const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const pathEl = document.createElementNS(NS, 'path');
     pathEl.setAttribute('d', path);
     pathEl.setAttribute('fill', color);
     pathEl.setAttribute('opacity', '0.8');
+    pathEl.setAttribute('pointer-events', 'none');
     group.appendChild(pathEl);
 
     svg.appendChild(group);
@@ -193,7 +209,7 @@ const SVGChart = {
    * 健康項目（中央の円）を水位で塗りつぶし
    */
   drawHealthCircle(svg, center, radius, health, healthColor) {
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const group = document.createElementNS(NS, 'g');
     group.setAttribute('id', 'health-circle');
 
     // 水位の高さを計算
@@ -202,20 +218,21 @@ const SVGChart = {
     const waterTop = center + radius - waterHeight;
 
     // 水位の矩形
-    const water = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    const water = document.createElementNS(NS, 'rect');
     water.setAttribute('x', center - radius);
     water.setAttribute('y', waterTop);
     water.setAttribute('width', radius * 2);
     water.setAttribute('height', waterHeight);
-    water.setAttribute('fill', healthColor || '#4488FF');
+    water.setAttribute('fill', this.colorMap[healthColor] || healthColor || '#4488FF');
     water.setAttribute('opacity', '0.8');
+    water.setAttribute('pointer-events', 'none');
     group.appendChild(water);
 
     // クリップパスを適用して円形に
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-    const clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+    const defs = document.createElementNS(NS, 'defs');
+    const clipPath = document.createElementNS(NS, 'clipPath');
     clipPath.setAttribute('id', 'health-clip');
-    const clipCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    const clipCircle = document.createElementNS(NS, 'circle');
     clipCircle.setAttribute('cx', center);
     clipCircle.setAttribute('cy', center);
     clipCircle.setAttribute('r', radius);
@@ -230,33 +247,14 @@ const SVGChart = {
   },
 
   /**
-   * 未入力の健康項目を描画
-   */
-  drawEmptyHealthCircle(svg, center, radius) {
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    group.setAttribute('id', 'health-circle');
-
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', center);
-    circle.setAttribute('cy', center);
-    circle.setAttribute('r', radius);
-    circle.setAttribute('fill', '#F5F5F5');
-    circle.setAttribute('stroke', '#DDDDDD');
-    circle.setAttribute('stroke-width', '1');
-    group.appendChild(circle);
-
-    svg.appendChild(group);
-  },
-
-  /**
    * ラベルを描画
    */
-  drawLabels(svg, center, innerRadius, outerRadius) {
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  drawLabels(svg, center, innerRadius, outerRadius, scale) {
+    const group = document.createElementNS(NS, 'g');
     group.setAttribute('id', 'labels');
-    group.setAttribute('font-size', '10');
     group.setAttribute('text-anchor', 'middle');
     group.setAttribute('fill', '#666666');
+    group.setAttribute('pointer-events', 'none');
 
     const labelRadius = (innerRadius + outerRadius) / 2;
 
@@ -264,12 +262,12 @@ const SVGChart = {
       // 項目と項目の間に配置（各セクションの中央）
       const angle = ((i + 0.5) / 8) * 2 * Math.PI - Math.PI / 2;
       const x = center + labelRadius * Math.cos(angle);
-      const y = center + labelRadius * Math.sin(angle) + 3;
+      const y = center + labelRadius * Math.sin(angle) - 2 * scale;
 
-      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      const text = document.createElementNS(NS, 'text');
       text.setAttribute('x', x);
       text.setAttribute('y', y);
-      text.setAttribute('font-size', '9');
+      text.setAttribute('font-size', 9 * scale);
       text.textContent = this.items[i];
       group.appendChild(text);
     }
@@ -280,11 +278,12 @@ const SVGChart = {
   /**
    * スコア数値を描画
    */
-  drawScores(svg, center, innerRadius, outerRadius, scores, health) {
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  drawScores(svg, center, innerRadius, outerRadius, scores, health, scale) {
+    const group = document.createElementNS(NS, 'g');
     group.setAttribute('id', 'scores');
     group.setAttribute('text-anchor', 'middle');
     group.setAttribute('fill', '#999999');
+    group.setAttribute('pointer-events', 'none');
 
     const scoreRadius = (innerRadius + outerRadius) / 2;
 
@@ -292,25 +291,66 @@ const SVGChart = {
     for (let i = 0; i < 8; i++) {
       const angle = ((i + 0.5) / 8) * 2 * Math.PI - Math.PI / 2;
       const x = center + scoreRadius * Math.cos(angle);
-      const y = center + scoreRadius * Math.sin(angle) + 13;
+      const y = center + scoreRadius * Math.sin(angle) + 11 * scale;
 
-      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      const text = document.createElementNS(NS, 'text');
       text.setAttribute('x', x);
       text.setAttribute('y', y);
-      text.setAttribute('font-size', '8');
+      text.setAttribute('font-size', 8 * scale);
       text.setAttribute('fill', '#AAAAAA');
-      text.textContent = scores[i] || '0';
+      text.textContent = (scores && scores[i]) || '0';
       group.appendChild(text);
     }
 
     // 健康のスコア（中央）
-    const healthText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    const healthText = document.createElementNS(NS, 'text');
     healthText.setAttribute('x', center);
-    healthText.setAttribute('y', center + 24);
-    healthText.setAttribute('font-size', '10');
+    healthText.setAttribute('y', center + 16 * scale);
+    healthText.setAttribute('font-size', 10 * scale);
     healthText.setAttribute('fill', '#AAAAAA');
     healthText.textContent = health || '0';
     group.appendChild(healthText);
+
+    svg.appendChild(group);
+  },
+
+  /**
+   * タップ選択用の当たり判定（透明な扇形）を描画。
+   * 選択中の項目はうっすらハイライトする。
+   */
+  drawHitAreas(svg, center, innerRadius, outerRadius, scale, selectedItem) {
+    const group = document.createElementNS(NS, 'g');
+    group.setAttribute('id', 'hit-areas');
+
+    // 8項目の扇形（塗りが0でもタップできるよう全域をカバー）
+    for (let i = 0; i < 8; i++) {
+      const startAngle = (i / 8) * 2 * Math.PI - Math.PI / 2;
+      const endAngle = ((i + 1) / 8) * 2 * Math.PI - Math.PI / 2;
+      const d = this.createSegmentPath(center, startAngle, endAngle, innerRadius, outerRadius);
+
+      const el = document.createElementNS(NS, 'path');
+      el.setAttribute('d', d);
+      el.setAttribute('data-item', i);
+      const isSelected = selectedItem === i;
+      el.setAttribute('fill', isSelected ? 'rgba(212,181,160,0.20)' : 'transparent');
+      el.setAttribute('stroke', isSelected ? '#B89A82' : 'none');
+      el.setAttribute('stroke-width', isSelected ? 2 * scale : 0);
+      el.style.cursor = 'pointer';
+      group.appendChild(el);
+    }
+
+    // 健康（中央円）
+    const circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute('cx', center);
+    circle.setAttribute('cy', center);
+    circle.setAttribute('r', innerRadius);
+    circle.setAttribute('data-item', 'health');
+    const healthSelected = selectedItem === 'health';
+    circle.setAttribute('fill', healthSelected ? 'rgba(212,181,160,0.20)' : 'transparent');
+    circle.setAttribute('stroke', healthSelected ? '#B89A82' : 'none');
+    circle.setAttribute('stroke-width', healthSelected ? 2 * scale : 0);
+    circle.style.cursor = 'pointer';
+    group.appendChild(circle);
 
     svg.appendChild(group);
   }

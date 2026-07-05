@@ -94,6 +94,15 @@ body {
   justify-content: center;
 }
 
+/* 入力後の画面は内容が縦に長くなるため上寄せにして見切れを防ぐ */
+#screen-input .container,
+#screen-complete .container,
+#screen-reflection .container {
+  justify-content: flex-start;
+  padding-top: 16px;
+  padding-bottom: 24px;
+}
+
 /* ============================================================
    Welcome Screen
    ============================================================ */
@@ -278,8 +287,8 @@ label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -290,95 +299,78 @@ label {
 
 .chart-preview {
   text-align: center;
-  margin-bottom: 24px;
-  padding: 16px;
+  margin-bottom: 12px;
+  padding: 10px;
   background: var(--surface);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
 }
 
 .chart-svg {
-  max-width: 100%;
+  width: 100%;
+  max-width: 250px;
   height: auto;
+  touch-action: manipulation;
 }
 
-/* Item Selector (Tabs) */
-.item-selector {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.item-tab {
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--font-sans);
-  color: var(--text);
-}
-
-.item-tab:hover {
-  border-color: var(--accent);
-  background: var(--accent-light);
-}
-
-.item-tab.active {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent);
-}
-
-.item-tab.health-btn {
-  grid-column: 1 / -1;
+.chart-hint {
+  font-size: 11px;
+  color: var(--text-sub);
+  margin-top: 2px;
 }
 
 /* Input Form */
 .input-form {
   background: var(--surface);
   border-radius: var(--radius-md);
-  padding: 20px;
+  padding: 16px;
   box-shadow: var(--shadow-card);
 }
 
 .question {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 24px;
-  line-height: 1.6;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* スライダー下の目盛り説明（1行・コンパクト） */
+.scale-note {
+  margin: 8px 0 14px;
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 /* Color Selector */
 .color-selector {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .color-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .color-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 
 .color-btn {
-  aspect-ratio: 1;
+  width: 34px;
+  height: 34px;
   border: 2px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s;
   color: transparent;
   font-size: 0;
+  flex-shrink: 0;
 }
 
 .color-btn:hover {
@@ -392,14 +384,14 @@ label {
 
 /* Slider Container */
 .slider-container {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .slider-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   display: block;
 }
 
@@ -412,7 +404,7 @@ label {
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
-  margin: 16px 0;
+  margin: 10px 0;
 }
 
 .slider::-webkit-slider-thumb {
@@ -453,11 +445,11 @@ label {
 
 .slider-display {
   text-align: center;
-  margin: 16px 0;
+  margin: 8px 0;
 }
 
 .slider-value {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   color: var(--accent);
 }
@@ -627,15 +619,10 @@ textarea::placeholder {
   }
 
   .question {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .color-grid {
-    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
-  }
-
-  .item-selector {
-    gap: 6px;
   }
 }

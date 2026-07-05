@@ -74,22 +74,10 @@
 
         <!-- チャートプレビュー -->
         <div class="chart-preview">
-          <svg id="chart-svg" width="160" height="160" viewBox="0 0 160 160" class="chart-svg">
+          <svg id="chart-svg" width="300" height="300" viewBox="0 0 300 300" class="chart-svg">
             <!-- チャートはここに描画される -->
           </svg>
-        </div>
-
-        <!-- 項目選択 -->
-        <div class="item-selector">
-          <button class="item-tab" data-item="0">身近な人</button>
-          <button class="item-tab" data-item="1">職場</button>
-          <button class="item-tab" data-item="2">趣味</button>
-          <button class="item-tab" data-item="3">学び</button>
-          <button class="item-tab" data-item="4">生活環境</button>
-          <button class="item-tab" data-item="5">資産</button>
-          <button class="item-tab" data-item="6">貢献</button>
-          <button class="item-tab" data-item="7">社会</button>
-          <button class="item-tab health-btn" data-item="health">健康</button>
+          <p class="chart-hint">円の項目をタップして選び、色と満足度を決めましょう</p>
         </div>
 
         <!-- 入力フォーム -->
@@ -98,22 +86,26 @@
 
           <!-- 色選択 -->
           <div class="color-selector">
-            <p class="color-label">いまの感覚に合う色を選んでください</p>
+            <p class="color-label">いまの感覚に合う色</p>
             <div class="color-grid">
               <button class="color-btn" data-color="red" style="background-color: #FF4444;">赤</button>
-              <button class="color-btn" data-color="blue" style="background-color: #4488FF;">青</button>
-              <button class="color-btn" data-color="yellow" style="background-color: #FFCC00;">黄</button>
-              <button class="color-btn" data-color="green" style="background-color: #44CC44;">緑</button>
               <button class="color-btn" data-color="orange" style="background-color: #FF8844;">オレンジ</button>
-              <button class="color-btn" data-color="pink" style="background-color: #FF66BB;">ピンク</button>
-              <button class="color-btn" data-color="purple" style="background-color: #9944FF;">紫</button>
+              <button class="color-btn" data-color="yellow" style="background-color: #FFCC00;">黄</button>
+              <button class="color-btn" data-color="lime" style="background-color: #A3D53A;">黄緑</button>
+              <button class="color-btn" data-color="green" style="background-color: #44CC44;">緑</button>
+              <button class="color-btn" data-color="teal" style="background-color: #22C1A5;">青緑</button>
               <button class="color-btn" data-color="cyan" style="background-color: #44CCFF;">水色</button>
+              <button class="color-btn" data-color="blue" style="background-color: #4488FF;">青</button>
+              <button class="color-btn" data-color="indigo" style="background-color: #5B5BD6;">藍</button>
+              <button class="color-btn" data-color="purple" style="background-color: #9944FF;">紫</button>
+              <button class="color-btn" data-color="pink" style="background-color: #FF66BB;">ピンク</button>
+              <button class="color-btn" data-color="brown" style="background-color: #B07A54;">茶</button>
             </div>
           </div>
 
           <!-- スライダー -->
           <div class="slider-container">
-            <p class="slider-label">満足度を選んでください</p>
+            <p class="slider-label">満足度</p>
             <input
               type="range"
               id="satisfaction-slider"
@@ -132,9 +124,8 @@
             </div>
           </div>
 
-          <div class="input-note">
-            <p><strong>1：</strong>満たされていない</p>
-            <p><strong>10：</strong>とても満たされている</p>
+          <div class="input-note scale-note">
+            <p><strong>1：</strong>満たされていない　<strong>10：</strong>とても満たされている</p>
           </div>
 
           <button id="btn-complete-input" class="btn btn-primary btn-lg" disabled>
@@ -152,7 +143,7 @@
 
           <div class="chart-with-info">
             <div class="chart-display">
-              <svg id="chart-final" width="240" height="240" viewBox="0 0 240 240" class="chart-final">
+              <svg id="chart-final" width="300" height="300" viewBox="0 0 300 300" class="chart-final">
                 <!-- チャートがここに描画される -->
               </svg>
             </div>

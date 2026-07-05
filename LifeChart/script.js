@@ -57,12 +57,12 @@ const App = {
       this.showScreen('welcome');
     });
 
-    // 項目タブ
-    document.querySelectorAll('.item-tab').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        const item = e.target.getAttribute('data-item');
-        this.selectItem(item === 'health' ? 'health' : parseInt(item));
-      });
+    // チャートの項目を直接タップして選択
+    document.getElementById('chart-svg').addEventListener('click', (e) => {
+      const target = e.target.closest('[data-item]');
+      if (!target) return;
+      const item = target.getAttribute('data-item');
+      this.selectItem(item === 'health' ? 'health' : parseInt(item));
     });
 
     // 色選択
@@ -123,19 +123,6 @@ const App = {
    * 項目を選択
    */
   selectItem(itemId) {
-    // 前の項目のタブをクリア
-    document.querySelectorAll('.item-tab').forEach((btn) => {
-      btn.classList.remove('active');
-    });
-
-    // 新しい項目を選択
-    const btn = document.querySelector(
-      itemId === 'health'
-        ? '.item-tab.health-btn'
-        : `.item-tab[data-item="${itemId}"]`
-    );
-    if (btn) btn.classList.add('active');
-
     this.currentItem = itemId;
     this.currentColor = null;
 
@@ -143,6 +130,8 @@ const App = {
     this.updateQuestionDisplay();
     this.updateColorSelection();
     this.updateSliderDisplay();
+    // チャートの選択ハイライトを更新
+    this.updateChart();
   },
 
   /**
@@ -202,6 +191,9 @@ const App = {
 
     // スライダーを有効化
     document.getElementById('satisfaction-slider').disabled = false;
+
+    // チャートに色を即時反映
+    this.updateChart();
   },
 
   /**
@@ -263,7 +255,10 @@ const App = {
    * チャートを更新
    */
   updateChart() {
-    SVGChart.draw('chart-svg', this.currentData, 160);
+    SVGChart.draw('chart-svg', this.currentData, 300, {
+      interactive: true,
+      selectedItem: this.currentItem
+    });
   },
 
   /**
@@ -313,16 +308,14 @@ const App = {
   },
 
   /**
-   * 完成画面を描画
+   * 完成画面の内容を描画（画面切り替えは showScreen('complete') が行う）
    */
   renderCompleteScreen() {
-    SVGChart.draw('chart-final', this.currentData, 240);
+    SVGChart.draw('chart-final', this.currentData, 300);
 
     // 名前と日付を表示
     document.getElementById('complete-name').textContent = this.currentData.name;
     document.getElementById('complete-date').textContent = this.currentData.date;
-
-    this.showScreen('complete');
   },
 
   /**
@@ -330,7 +323,7 @@ const App = {
    */
   completeInput() {
     if (this.isAllItemsComplete()) {
-      this.renderCompleteScreen();
+      this.showScreen('complete');
     } else {
       alert('すべての項目を入力してください');
     }
