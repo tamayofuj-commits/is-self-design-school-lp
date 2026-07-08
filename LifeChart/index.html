@@ -96,9 +96,9 @@
               <button class="color-btn" data-color="teal" style="background-color: #22C1A5;">青緑</button>
               <button class="color-btn" data-color="cyan" style="background-color: #44CCFF;">水色</button>
               <button class="color-btn" data-color="blue" style="background-color: #4488FF;">青</button>
-              <button class="color-btn" data-color="indigo" style="background-color: #5B5BD6;">藍</button>
               <button class="color-btn" data-color="purple" style="background-color: #9944FF;">紫</button>
               <button class="color-btn" data-color="pink" style="background-color: #FF66BB;">ピンク</button>
+              <button class="color-btn" data-color="rose" style="background-color: #FF8FB3;">ローズ</button>
               <button class="color-btn" data-color="brown" style="background-color: #B07A54;">茶</button>
             </div>
           </div>
@@ -139,7 +139,7 @@
     <div id="screen-complete" class="screen">
       <div class="container">
         <div class="complete-content">
-          <h2>いまのあなたの<br>ライフチャートが完成しました</h2>
+          <h2 id="complete-heading">ライフチャートが完成しました</h2>
 
           <div class="chart-with-info">
             <div class="chart-display">
@@ -149,65 +149,37 @@
             </div>
             <div class="chart-info">
               <div class="info-row">
-                <span id="complete-name" class="info-label"></span>
-              </div>
-              <div class="info-row">
                 <span id="complete-date" class="info-label"></span>
               </div>
             </div>
           </div>
 
-          <div class="screenshot-guide">
-            <p>名前と日付が入ったこの画面をスクリーンショットで保存しておくと、次回のチャートと見比べることができます。</p>
+          <!-- 一言コメント -->
+          <div class="comment-section">
+            <label for="complete-comment">やってみてどうだった？（一言コメント）</label>
+            <textarea id="complete-comment" rows="2" placeholder="感じたことを一言どうぞ" maxlength="200"></textarea>
           </div>
 
-          <button id="btn-reflection" class="btn btn-primary btn-lg">
-            振り返り質問に答える
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 振り返り画面 -->
-    <div id="screen-reflection" class="screen">
-      <div class="container">
-        <div class="reflection-content">
-          <div class="reflection-question">
-            <h3>1. 今のチャートを見て、まず感じたことは？</h3>
-            <textarea id="reflection-q1" placeholder="ここに記入してください" maxlength="500"></textarea>
+          <!-- CTA -->
+          <div class="cta-section">
+            <p>ライフチャートは、今の自分の現在地と、<br>人生全体のバランスを見るためのもの。</p>
+            <p>ここまで見える化できたら、次は読み解いていきましょう！</p>
+            <p class="cta-highlight">この画面をスクショしてLINEに送ってね！<br>あなたのライフチャートの活かし方を解説します。</p>
+            <!-- TODO: href は UTAGE の流入経路リンクが決まったら差し替える -->
+            <a href="#" target="_blank" class="btn btn-primary" id="cta-line-link">
+              ライフチャートの解説を受け取る
+            </a>
           </div>
 
-          <div class="reflection-question">
-            <h3>2. 満たされていると感じるのはどの項目ですか？</h3>
-            <textarea id="reflection-q2" placeholder="ここに記入してください" maxlength="500"></textarea>
-          </div>
-
-          <div class="reflection-question">
-            <h3>3. これから大切にしたい項目はどれですか？（最大3つまで）</h3>
-            <textarea id="reflection-q3" placeholder="ここに記入してください" maxlength="500"></textarea>
-          </div>
-
-          <div class="reflection-question">
-            <h3>4. その項目の満足度が1点上がっているとしたら、どんな状態になっていますか？</h3>
-            <textarea id="reflection-q4" placeholder="ここに記入してください" maxlength="500"></textarea>
-          </div>
-
-          <div class="reflection-question">
-            <h3>自分へのメモ欄</h3>
-            <p class="question-subtitle">今の自分に残しておきたいこと</p>
-            <textarea id="memo" placeholder="ここに記入してください" maxlength="500"></textarea>
+          <!-- 過去のライフチャート -->
+          <div id="history-section" class="history-section">
+            <h3 class="history-title">過去のライフチャート</h3>
+            <div id="history-list" class="history-list"></div>
           </div>
 
           <button id="btn-complete" class="btn btn-primary btn-lg">
             診断を完了する
           </button>
-
-          <div class="line-section">
-            <p>このチャートをどう活かすか、次のヒントをLINEで受け取れます。</p>
-            <a href="https://example.com" target="_blank" class="btn btn-primary">
-              ライフチャートの活かし方をLINEで見る
-            </a>
-          </div>
         </div>
       </div>
     </div>

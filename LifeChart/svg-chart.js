@@ -8,14 +8,14 @@ const NS = 'http://www.w3.org/2000/svg';
 const SVGChart = {
   // 8項目の名前（円形チャートの外側）
   items: [
-    '身近な人',
-    '職場',
-    '趣味',
-    '学び',
+    '家族・パートナー',
+    '人間関係',
+    '趣味・余暇',
+    '学び・成長',
     '生活環境',
     '資産',
-    '貢献',
-    '社会'
+    '仕事での貢献',
+    '社会貢献'
   ],
 
   // デフォルトカラーマッピング（12色）
@@ -28,9 +28,9 @@ const SVGChart = {
     teal: '#22C1A5',
     cyan: '#44CCFF',
     blue: '#4488FF',
-    indigo: '#5B5BD6',
     purple: '#9944FF',
     pink: '#FF66BB',
+    rose: '#FF8FB3',
     brown: '#B07A54'
   },
 
@@ -67,14 +67,14 @@ const SVGChart = {
 
     // 健康項目（中央）を描画
     if (data.health !== undefined && data.health > 0) {
-      this.drawHealthCircle(svg, center, healthRadius, data.health, data.healthColor);
+      this.drawHealthCircle(svg, center, healthRadius, data.health, data.healthColor, svgId);
     }
 
-    // ラベルを描画
-    this.drawLabels(svg, center, innerRadius, outerRadius, scale);
+    // ラベルと各項目のスコアを描画
+    this.drawLabels(svg, center, innerRadius, outerRadius, scale, data.scores);
 
-    // スコア数値を描画
-    this.drawScores(svg, center, innerRadius, outerRadius, data.scores, data.health, scale);
+    // 中央（健康）のスコア数値を描画
+    this.drawHealthScore(svg, center, data.health, scale);
 
     // 中央に「健康」というテキストを描画
     const healthText = document.createElementNS(NS, 'text');
@@ -208,9 +208,11 @@ const SVGChart = {
   /**
    * 健康項目（中央の円）を水位で塗りつぶし
    */
-  drawHealthCircle(svg, center, radius, health, healthColor) {
+  drawHealthCircle(svg, center, radius, health, healthColor, svgId) {
     const group = document.createElementNS(NS, 'g');
     group.setAttribute('id', 'health-circle');
+    // 同一ページに複数チャートを描くためクリップIDを一意にする
+    const clipId = `health-clip-${svgId || 'default'}`;
 
     // 水位の高さを計算
     const ratio = Math.max(0, Math.min(1, health / 10));
@@ -231,7 +233,7 @@ const SVGChart = {
     // クリップパスを適用して円形に
     const defs = document.createElementNS(NS, 'defs');
     const clipPath = document.createElementNS(NS, 'clipPath');
-    clipPath.setAttribute('id', 'health-clip');
+    clipPath.setAttribute('id', clipId);
     const clipCircle = document.createElementNS(NS, 'circle');
     clipCircle.setAttribute('cx', center);
     clipCircle.setAttribute('cy', center);
@@ -241,76 +243,74 @@ const SVGChart = {
     svg.appendChild(defs);
 
     // グループにクリップパスを適用
-    group.setAttribute('clip-path', 'url(#health-clip)');
+    group.setAttribute('clip-path', `url(#${clipId})`);
 
     svg.appendChild(group);
   },
 
   /**
-   * ラベルを描画
+   * テキスト要素を作成して親に追加するヘルパー
    */
-  drawLabels(svg, center, innerRadius, outerRadius, scale) {
+  addText(parent, x, y, content, fontSize, fill) {
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('x', x);
+    t.setAttribute('y', y);
+    t.setAttribute('font-size', fontSize);
+    t.setAttribute('fill', fill);
+    t.textContent = content;
+    parent.appendChild(t);
+  },
+
+  /**
+   * ラベル（長い項目名は「・」で2行に分割）と各項目のスコアを描画
+   */
+  drawLabels(svg, center, innerRadius, outerRadius, scale, scores) {
     const group = document.createElementNS(NS, 'g');
     group.setAttribute('id', 'labels');
     group.setAttribute('text-anchor', 'middle');
-    group.setAttribute('fill', '#666666');
     group.setAttribute('pointer-events', 'none');
 
     const labelRadius = (innerRadius + outerRadius) / 2;
+    const labelFont = 7.5 * scale;
+    const scoreFont = 8 * scale;
+    const lineH = labelFont * 1.05;
 
     for (let i = 0; i < 8; i++) {
-      // 項目と項目の間に配置（各セクションの中央）
       const angle = ((i + 0.5) / 8) * 2 * Math.PI - Math.PI / 2;
-      const x = center + labelRadius * Math.cos(angle);
-      const y = center + labelRadius * Math.sin(angle) - 2 * scale;
+      const lx = center + labelRadius * Math.cos(angle);
+      const ly = center + labelRadius * Math.sin(angle);
 
-      const text = document.createElementNS(NS, 'text');
-      text.setAttribute('x', x);
-      text.setAttribute('y', y);
-      text.setAttribute('font-size', 9 * scale);
-      text.textContent = this.items[i];
-      group.appendChild(text);
+      // 長い項目名は「・」で2行に分割して収める
+      const parts = this.items[i].includes('・')
+        ? this.items[i].split('・')
+        : [this.items[i]];
+
+      let scoreY;
+      if (parts.length === 2) {
+        this.addText(group, lx, ly - lineH * 0.35, parts[0], labelFont, '#666666');
+        this.addText(group, lx, ly + lineH * 0.75, parts[1], labelFont, '#666666');
+        scoreY = ly + lineH * 0.75 + scoreFont * 1.3;
+      } else {
+        this.addText(group, lx, ly + labelFont * 0.2, parts[0], labelFont, '#666666');
+        scoreY = ly + labelFont * 0.2 + scoreFont * 1.4;
+      }
+
+      const val = (scores && scores[i]) || '0';
+      this.addText(group, lx, scoreY, val, scoreFont, '#AAAAAA');
     }
 
     svg.appendChild(group);
   },
 
   /**
-   * スコア数値を描画
+   * 中央（健康）のスコア数値を描画
    */
-  drawScores(svg, center, innerRadius, outerRadius, scores, health, scale) {
+  drawHealthScore(svg, center, health, scale) {
     const group = document.createElementNS(NS, 'g');
     group.setAttribute('id', 'scores');
     group.setAttribute('text-anchor', 'middle');
-    group.setAttribute('fill', '#999999');
     group.setAttribute('pointer-events', 'none');
-
-    const scoreRadius = (innerRadius + outerRadius) / 2;
-
-    // 8項目のスコア
-    for (let i = 0; i < 8; i++) {
-      const angle = ((i + 0.5) / 8) * 2 * Math.PI - Math.PI / 2;
-      const x = center + scoreRadius * Math.cos(angle);
-      const y = center + scoreRadius * Math.sin(angle) + 11 * scale;
-
-      const text = document.createElementNS(NS, 'text');
-      text.setAttribute('x', x);
-      text.setAttribute('y', y);
-      text.setAttribute('font-size', 8 * scale);
-      text.setAttribute('fill', '#AAAAAA');
-      text.textContent = (scores && scores[i]) || '0';
-      group.appendChild(text);
-    }
-
-    // 健康のスコア（中央）
-    const healthText = document.createElementNS(NS, 'text');
-    healthText.setAttribute('x', center);
-    healthText.setAttribute('y', center + 16 * scale);
-    healthText.setAttribute('font-size', 10 * scale);
-    healthText.setAttribute('fill', '#AAAAAA');
-    healthText.textContent = health || '0';
-    group.appendChild(healthText);
-
+    this.addText(group, center, center + 16 * scale, health || '0', 10 * scale, '#AAAAAA');
     svg.appendChild(group);
   },
 

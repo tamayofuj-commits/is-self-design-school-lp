@@ -355,8 +355,8 @@ label {
 }
 
 .color-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 34px);
   justify-content: center;
   gap: 10px;
 }
@@ -468,13 +468,13 @@ label {
 .complete-content {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px;
   text-align: center;
 }
 
 .complete-content h2 {
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -530,6 +530,92 @@ label {
   line-height: 1.6;
   color: var(--text);
   margin: 0;
+}
+
+/* 一言コメント欄 */
+.comment-section {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-section label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.comment-section textarea {
+  width: 100%;
+  height: 3em;
+  min-height: 3em;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.comment-section textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* 過去のライフチャート */
+.history-section {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.history-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-item {
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0;
+}
+
+.history-chart {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+.history-comment {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
 }
 
 /* ============================================================
@@ -604,6 +690,36 @@ textarea::placeholder {
 .line-section a {
   margin-top: 12px;
   display: inline-block;
+}
+
+/* ============================================================
+   CTA Section
+   ============================================================ */
+.cta-section {
+  background: var(--accent-light);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.cta-section p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.cta-section .cta-highlight {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.cta-section .btn {
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 /* ============================================================

@@ -4,17 +4,20 @@
  */
 
 const ITEMS = [
-  { id: 0, name: '身近な人・家族・友人', question: '今の身近な人・家族・友人との関係への満足度はどれくらいですか？' },
-  { id: 1, name: '職場の人間関係', question: '今の職場の人間関係への満足度はどれくらいですか？' },
+  { id: 0, name: '家族・パートナー', question: '今の家族・パートナーとの関係への満足度はどれくらいですか？' },
+  { id: 1, name: '人間関係', question: '今の人間関係への満足度はどれくらいですか？' },
   { id: 2, name: '趣味・余暇', question: '今の趣味や余暇への満足度はどれくらいですか？' },
-  { id: 3, name: '学び・成長・精神', question: '今の学び・成長・精神面への満足度はどれくらいですか？' },
-  { id: 4, name: '生活環境・住居・通勤など', question: '今の生活環境への満足度はどれくらいですか？' },
+  { id: 3, name: '学び・成長', question: '今の学び・成長への満足度はどれくらいですか？' },
+  { id: 4, name: '生活環境', question: '今の生活環境への満足度はどれくらいですか？' },
   { id: 5, name: '資産・収入・貯蓄', question: '今の資産・収入・貯蓄への満足度はどれくらいですか？' },
-  { id: 6, name: '会社や所属先への貢献', question: '今の会社や所属先への貢献への満足度はどれくらいですか？' },
+  { id: 6, name: '仕事での貢献', question: '今の仕事での貢献への満足度はどれくらいですか？' },
   { id: 7, name: '社会貢献', question: '今の社会貢献への満足度はどれくらいですか？' }
 ];
 
 const App = {
+  // 履歴保存用のキー
+  HISTORY_KEY: 'lifechart_history',
+
   // 現在の入力状態
   currentData: {
     name: '',
@@ -82,12 +85,7 @@ const App = {
       this.completeInput();
     });
 
-    // 完成画面
-    document.getElementById('btn-reflection').addEventListener('click', () => {
-      this.showScreen('reflection');
-    });
-
-    // 振り返り画面
+    // 完成画面：診断を完了する
     document.getElementById('btn-complete').addEventListener('click', () => {
       this.completeDiagnosis();
     });
@@ -313,9 +311,23 @@ const App = {
   renderCompleteScreen() {
     SVGChart.draw('chart-final', this.currentData, 300);
 
-    // 名前と日付を表示
-    document.getElementById('complete-name').textContent = this.currentData.name;
-    document.getElementById('complete-date').textContent = this.currentData.date;
+    // 見出しを「○○さんのライフチャート」に（名前がなければ汎用文言）
+    const heading = document.getElementById('complete-heading');
+    heading.textContent = '';
+    const name = this.currentData.name.trim();
+    if (name) {
+      heading.appendChild(document.createTextNode(`${name}さんの`));
+      heading.appendChild(document.createElement('br'));
+      heading.appendChild(document.createTextNode('ライフチャートが完成しました'));
+    } else {
+      heading.textContent = 'ライフチャートが完成しました';
+    }
+
+    // 日付を表示
+    document.getElementById('complete-date').textContent = this.formatDate(this.currentData.date);
+
+    // 過去のライフチャート（最大3回分）を表示
+    this.renderHistory();
   },
 
   /**
@@ -330,10 +342,100 @@ const App = {
   },
 
   /**
-   * 診断を完了
+   * 日付を「YYYY年M月D日」形式に整形
+   */
+  formatDate(iso) {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-');
+    if (!y || !m || !d) return iso;
+    return `${y}年${parseInt(m, 10)}月${parseInt(d, 10)}日`;
+  },
+
+  /**
+   * 履歴を読み込む（新しい順の配列）
+   */
+  loadHistory() {
+    try {
+      const raw = localStorage.getItem(this.HISTORY_KEY);
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  /**
+   * 現在のチャートを履歴に保存（先頭に追加、最大10件保持）
+   */
+  saveToHistory(entry) {
+    const history = this.loadHistory();
+    history.unshift(entry);
+    try {
+      localStorage.setItem(this.HISTORY_KEY, JSON.stringify(history.slice(0, 10)));
+    } catch (e) {
+      // 保存できない環境（プライベートモード等）でも診断は続行
+    }
+  },
+
+  /**
+   * 過去のライフチャート（最大3回分）を結果画面に描画
+   */
+  renderHistory() {
+    const section = document.getElementById('history-section');
+    const list = document.getElementById('history-list');
+    list.innerHTML = '';
+
+    const history = this.loadHistory().slice(0, 3);
+    if (history.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+    section.style.display = 'block';
+
+    history.forEach((entry, idx) => {
+      const item = document.createElement('div');
+      item.className = 'history-item';
+
+      const dateEl = document.createElement('p');
+      dateEl.className = 'history-date';
+      dateEl.textContent = this.formatDate(entry.date);
+      item.appendChild(dateEl);
+
+      const svgId = `history-chart-${idx}`;
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('id', svgId);
+      svg.setAttribute('viewBox', '0 0 200 200');
+      svg.setAttribute('class', 'history-chart');
+      item.appendChild(svg);
+
+      if (entry.comment) {
+        const commentEl = document.createElement('p');
+        commentEl.className = 'history-comment';
+        commentEl.textContent = entry.comment;
+        item.appendChild(commentEl);
+      }
+
+      list.appendChild(item);
+      SVGChart.draw(svgId, entry, 200);
+    });
+  },
+
+  /**
+   * 診断を完了（コメントとともに履歴へ保存）
    */
   completeDiagnosis() {
-    alert('診断が完了しました！');
+    const comment = document.getElementById('complete-comment').value.trim();
+    this.saveToHistory({
+      date: this.currentData.date,
+      name: this.currentData.name,
+      scores: [...this.currentData.scores],
+      colors: [...this.currentData.colors],
+      health: this.currentData.health,
+      healthColor: this.currentData.healthColor,
+      comment
+    });
+
+    alert('診断が完了しました！お疲れさまでした。');
     // 初期状態にリセット
     this.resetData();
     this.showScreen('welcome');
@@ -354,11 +456,7 @@ const App = {
     this.currentItem = 0;
     this.currentColor = null;
     document.getElementById('name-input').value = '';
-    document.getElementById('reflection-q1').value = '';
-    document.getElementById('reflection-q2').value = '';
-    document.getElementById('reflection-q3').value = '';
-    document.getElementById('reflection-q4').value = '';
-    document.getElementById('memo').value = '';
+    document.getElementById('complete-comment').value = '';
     this.updateStartButton();
   }
 };
